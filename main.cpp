@@ -1,10 +1,22 @@
 #include "DxLib.h"
 #include "Vector3.h"
-//球の描画
-int DrawSphere3D(const Vector3& CenterPos, const float r, const int DivNum,
-	const unsigned int DifColor, const unsigned int SpcColor, const int FillFlag);
 
+//Vector3型を利用しやすくするための オーバーロード関数群
+//球の描画
+//DxLib = > int DrawSphere3D(VECTOR Centerpos, float r, int DivNum, unsigned int DifColor, unsigned int Spccolor, int FillFlag);
+int DrawSphere3D(const Vector3& CenterPos, const float r, const int DivNum, const unsigned int Difcolor, const unsigned int Spccolor, const int FillFlag);
+
+//線分の描画
+// DxLib => int DrawLine3D(VECTOR Pos1, VECTOR Pos2, unsigned int Color);
 int DrawLine3D(const Vector3& Pos1, const Vector3& Pos2, const unsigned int Color);
+
+// カメラの位置と姿勢の設定
+// DxLib => int SetCamerapositionAndTargetAndUpVec(VECTOR Position, VECTOR Target, VECTOR Up);
+int SetCameraPositionAndTargetAndUpVec(
+	const Vector3& cameraPosition,//カメラの位置 
+	const Vector3& cameraTarget,//カメラの注視点
+	const Vector3& cameraUp //カメラの上の向き
+);
 
 
 // ウィンドウのタイトルに表示する文字列
@@ -17,7 +29,7 @@ const int WIN_WIDTH = 1024;
 const int WIN_HEIGHT = 576;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
-                   _In_ int nCmdShow) {
+	_In_ int nCmdShow) {
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
@@ -35,7 +47,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetWindowSizeExtendRate(1.0);
 
 	// 画面の背景色を設定する
-	SetBackgroundColor(0x00, 0x00, 0x00);
+	SetBackgroundColor(0x00, 0x00, 0x64);
 
 	// DXlibの初期化
 	if (DxLib_Init() == -1) { return -1; }
@@ -53,24 +65,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetCameraNearFar(1.0f, 1000.0f);//カメラの有効範囲の設定
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);//画面の中心をカメラの中心に合わせる
 
+	Vector3 cameraPosition(0.0f, 0.0f, -30.0f);
+	Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
+	Vector3 cameraUp(0.0f, 1.0f, 0.0f);
+
 	SetCameraPositionAndTargetAndUpVec(
-		VGet(0.0f, 0.0f, -100.0f),//カメラの位置
-		VGet(0.0f, 0.0f, 0.0f),//カメラの注視点
-		VGet(0.0f, 1.0f, 0.0f));//カメラの上の向き
+		cameraPosition,			//カメラの位置
+		cameraTarget,			//カメラの注視点
+		cameraUp				//カメラの上の向き
+	);
+
+	Vector3 A(3, -1, 2);
+	Vector3 B(1, 5, -4);
+	Vector3 C(-1, 7, 6);
+
+	Vector3 AB = B - A;//ABベクトルの生成
+	Vector3 BC = C - B;// BCベクトルの生成
+	Vector3 n = AB.cross(BC);//法線ベクトルを求める(ABベクトルとBCベクトルの外積を求める)
+	n.normalize();//法線ベクトルの単位ベクトル化
+
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
-	Vector3 position(0, 0, 0);//位置
-	Vector3 velocity(0.0f, 0.0f, 0.5f);//速度
 
 	// ゲームループで使う変数の宣言
 
 
 	// 最新のキーボード情報用
-	char keys[256] = {0};
+	char keys[256] = { 0 };
 
 	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = {0};
+	char oldkeys[256] = { 0 };
 
 	// ゲームループ
 	while (true) {
@@ -83,11 +108,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		position += velocity;
+
+		Vector3 v = cameraTarget - cameraPosition;//視点への方向ベクトルを求める(重心→カメラ位置 へのベクトル)
+		v.normalize();//単位ベクトル化
+		unsigned color = GetColor(255, 255, 255);
+		float fv = v.dot(n);
+		if (fv > 0)
+		{
+			color = GetColor(255, 0, 0);
+		}
 
 		// 描画処理
-		ClearDrawScreen();
-		DrawSphere3D(position, 80.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), true);
+		
+		// 描画
+		ClearDrawScreen(); // 画面を消去
+		DrawLine3D(A, B, color);
+		DrawLine3D(B, C, color);
+		DrawLine3D(C, A, color);
+
+		// 法線の視覚化
+		DrawLine3D(A, A + n, GetColor(0, 255, 0));
+		DrawLine3D(B, B + n, GetColor(0, 255, 0));
+		DrawLine3D(C, C + n, GetColor(0, 255, 0));
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -130,4 +172,18 @@ int DrawLine3D(const Vector3& Pos1, const Vector3& Pos2, const unsigned int Colo
 	VECTOR p2 = { Pos2.x,Pos2.y,Pos2.z };
 
 	return DrawLine3D(p1, p2, Color);
+}
+
+//カメラの位置と姿勢の設定
+//DxLib = > int SetCamerapositionAndTargetAndUpVec(VECTOR Position, VECTOR Target, VECTOR Up);
+int SetCameraPositionAndTargetAndUpVec(
+	const Vector3& cameraPosition,//カメラの位置
+	const Vector3& cameraTarget, //カメラの注視点
+	const Vector3& cameraUp //カメラの上の向き
+)
+{
+	VECTOR position = { cameraPosition.x, cameraPosition.y, cameraPosition.z };
+	VECTOR target = { cameraTarget.x, cameraTarget.y, cameraTarget.z };
+	VECTOR up = { cameraUp.x, cameraUp.y, cameraUp.z };
+	return SetCameraPositionAndTargetAndUpVec(position, target, up);
 }
