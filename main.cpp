@@ -6,6 +6,7 @@
 // 関数プロトタイプ宣言
 int DrawCircle(Vector2 vec, int r, unsigned int color);
 
+
 //Vector3型を利用しやすくするための オーバーロード関数群
 //球の描画
 //DxLib = > int DrawSphere3D(VECTOR Centerpos, float r, int DivNum, unsigned int DifColor, unsigned int Spccolor, int FillFlag);
