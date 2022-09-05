@@ -108,6 +108,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	float rotY = 0.0f;
 	float rotZ = 0.0f;
 
+	int scene = 0;
 
 	// ÉQÅ[ÉÄÉãÅ[Év
 	while (true)
@@ -154,6 +155,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		MV1SetMatrix(model, matWorld);
 
+		switch (scene)
+		{
+		case 0:
+
+		}
 
 		//ï`âÊ---------------
 		ClearDrawScreen();//âÊñ Çè¡ãé
