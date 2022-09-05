@@ -109,6 +109,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	int scene = 0;
 
+	int	color = GetColor(255, 255, 255);
+
 	// ゲームループ
 	while (true)
 	{
@@ -123,37 +125,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		//更新
-		if (CheckHitKey(KEY_INPUT_A))	rotY += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_D))	rotY -= ROT_UNIT;
-
-		if (CheckHitKey(KEY_INPUT_W))	rotX += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_S))	rotX -= ROT_UNIT;
-
-		if (CheckHitKey(KEY_INPUT_E))	rotZ += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_Z))	rotZ -= ROT_UNIT;
-
-		//[R]でリセット
-		if (CheckHitKey(KEY_INPUT_R))
-		{
-			rotX = rotY = rotZ = 0;
-		}
-
-		//各種変換行列の計算
-		Matrix4 matScale = scale(Vector3(5.0f, 5.0f, 5.0f)); //モデルの拡大率
-
-		Matrix4 matRotX = rotateX(rotX);
-
-		Matrix4 matRotY = rotateY(rotY);
-
-		Matrix4 matRotZ = rotateZ(rotZ);
-
-		Matrix4 matRot = matRotY * matRotX * matRotZ;
-
-		Matrix4 matWorld = matScale * matRot;
-
-
-		MV1SetMatrix(model, matWorld);
-
+		//if (CheckHitKey(KEY_INPUT_A))	rotY += ROT_UNIT;
+		//if (CheckHitKey(KEY_INPUT_D))	rotY -= ROT_UNIT;
+		//
+		//if (CheckHitKey(KEY_INPUT_W))	rotX += ROT_UNIT;
+		//if (CheckHitKey(KEY_INPUT_S))	rotX -= ROT_UNIT;
+		//
+		//if (CheckHitKey(KEY_INPUT_E))	rotZ += ROT_UNIT;
+		//if (CheckHitKey(KEY_INPUT_Z))	rotZ -= ROT_UNIT;
+		//
+		////[R]でリセット
+		//if (CheckHitKey(KEY_INPUT_R))
+		//{
+		//	rotX = rotY = rotZ = 0;
+		//}
+		//
+		////各種変換行列の計算
+		//Matrix4 matScale = scale(Vector3(5.0f, 5.0f, 5.0f)); //モデルの拡大率
+		//
+		//Matrix4 matRotX = rotateX(rotX);
+		//
+		//Matrix4 matRotY = rotateY(rotY);
+		//
+		//Matrix4 matRotZ = rotateZ(rotZ);
+		//
+		//Matrix4 matRot = matRotY * matRotX * matRotZ;
+		//
+		//Matrix4 matWorld = matScale * matRot;
+		//
+		//
+		//MV1SetMatrix(model, matWorld);
+		//
 		// シーン切り替え
 		switch (scene)
 		{
@@ -200,11 +202,39 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 		//描画---------------
-		ClearDrawScreen();//画面を消去
-		DrawAxis3D(200.0f);//xyz軸の描画
-		MV1DrawModel(model);//モデルの描画
+		//ClearDrawScreen();//画面を消去
+		//DrawAxis3D(200.0f);//xyz軸の描画
+		//MV1DrawModel(model);//モデルの描画
+		//
+		//DrawKeyOperation();// キー操作の描画
+		// シーン切り替え
+		switch (scene)
+		{
+			// タイトル
+		case 0:
+			DrawFormatString(0, 0, color, "タイトル");
+			break;
 
-		DrawKeyOperation();// キー操作の描画
+			// 操作説明
+		case 1:
+			DrawFormatString(0, 0, color, " 操作説明");
+			break;
+
+			// ゲーム
+		case 2:
+			DrawFormatString(0, 0, color, "ゲーム");
+			break;
+
+			// リザルト(クリア)
+		case 3:
+			DrawFormatString(0, 0, color, "クリア");
+			break;
+
+			// リザルト(ゲームオーバー)
+		case 4:
+			DrawFormatString(0, 0, color, "オーバー");
+			break;
+		}
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
