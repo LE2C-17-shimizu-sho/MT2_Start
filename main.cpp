@@ -75,10 +75,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
-
-	int haha;
-	int	baka;
-
 	// ゲームループで使う変数の宣言
 
 	// 最新のキーボード情報用
@@ -158,6 +154,49 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		MV1SetMatrix(model, matWorld);
 
+		// シーン切り替え
+		switch (scene)
+		{
+			// タイトル
+			case 0:
+				if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+				{
+					scene = 1;
+				}
+				break;
+
+			// 操作説明
+			case 1:
+				if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+				{
+					scene = 2;
+				}
+				break;
+
+			// ゲーム
+			case 2:
+				if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+				{
+					scene = 3;
+				}
+				break;
+
+			// リザルト(クリア)
+			case 3:
+				if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+				{
+					scene = 0;
+				}
+				break;
+
+			// リザルト(ゲームオーバー)
+			case 4:
+				if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+				{
+					scene = 0;
+				}
+				break;
+		}
 
 
 		//描画---------------
