@@ -155,11 +155,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		MV1SetMatrix(model, matWorld);
 
-		switch (scene)
-		{
-		case 0:
 
-		}
 
 		//ï`âÊ---------------
 		ClearDrawScreen();//âÊñ Çè¡ãé
