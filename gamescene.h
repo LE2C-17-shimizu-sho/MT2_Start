@@ -4,7 +4,7 @@
 class GameScene
 {
 public:
-	//GameScene();
+	GameScene();
 	~GameScene();
 	/// <summary>
 	/// ‰Šú‰»

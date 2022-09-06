@@ -3,7 +3,7 @@
 #include "Vector2.h"
 #include"Matrix4.h"
 #include<cstring>
-
+#include"gamescene.h"
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "10DaysGameJam";
@@ -46,35 +46,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// ゲームループで使う変数の宣言
 	int	x=300;
 	int	y=300;
-	// 最新のキーボード情報用
-	char keys[256] = { 0 };
+	GameScene* gameScene;
+	gameScene = new	GameScene();
 
-	// 1ループ(フレーム)前のキーボード情報
-	char oldkeys[256] = { 0 };
-
-	int scene = 0;
-
-	int	color = GetColor(255, 255, 255);
+	gameScene->Initialize();
 
 	// ゲームループ
 	while (true)
 	{
-		// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
-		for (int i = 0; i < 256; ++i)
-		{
-			oldkeys[i] = keys[i];
-		}
-		// 最新のキーボード情報を取得
-		GetHitKeyStateAll(keys);
+		ClearDrawScreen();
 
 		//---------  ここからプログラムを記述  ----------//
-
 		//更新
-		
-		// シーン切り替え
+		gameScene->Update();
 		
 		//描画---------------
-		
+		gameScene->Draw();
 		
 
 		//---------  ここまでにプログラムを記述  ---------//

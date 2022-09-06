@@ -1,17 +1,21 @@
 #include"gamescene.h"
 #include"DxLib.h"
 
-GameScene::~GameScene(){
+GameScene::GameScene()
+{
+}
+
+GameScene::~GameScene() {
 	delete	player;
 };
 
-void	GameScene::Initialize() {
-	player = new	Player;
+void GameScene::Initialize() {
+	player = new Player();
 	player->Initialize();
 }
 
-void	GameScene::Update() {
-	
+void GameScene::Update() {
+
 	// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
 	for (int i = 0; i < 256; ++i)
 	{
@@ -67,7 +71,7 @@ void	GameScene::Update() {
 }
 
 void	GameScene::Draw() {
-	int	color = GetColor(255, 255, 255);
+	unsigned int color = GetColor(255, 255, 255);
 	switch (scene)
 	{
 		// タイトル
@@ -98,4 +102,5 @@ void	GameScene::Draw() {
 		DrawFormatString(0, 0, color, "オーバー");
 		break;
 	}
+	DrawFormatString(0, 30, color, "scene = %d", scene);
 }

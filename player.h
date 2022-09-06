@@ -8,9 +8,13 @@ public:
 	/// </summary>
 	void	Initialize();
 	/// <summary>
+	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
+	/// </summary>
+	void	State();
+	/// <summary>
 	/// XV
 	/// </summary>
-	void	Update();
+	void	Update(char	key[],char	oldkey[]);
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
@@ -20,5 +24,6 @@ private:
 	float	posY;
 	float	r;
 	bool	flag;
-
+	float	range;
+	float	move;
 };
