@@ -9,10 +9,10 @@
 const char TITLE[] = "10DaysGameJam";
 
 // ウィンドウ横幅
-const int WIN_WIDTH = 1600;
+const int WIN_WIDTH = 1280;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 900;
+const int WIN_HEIGHT = 720;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 	_In_ int nCmdShow)
