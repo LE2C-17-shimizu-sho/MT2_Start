@@ -2,6 +2,6 @@
 
 class Map
 {
-
+	int map = 0;
 
 };
