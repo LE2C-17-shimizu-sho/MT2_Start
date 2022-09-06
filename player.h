@@ -20,6 +20,11 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void	Draw();
+
+	float	GetPossX();
+
+	float	GetPossY();
+
 private:
 	float	posX;
 	float	posY;

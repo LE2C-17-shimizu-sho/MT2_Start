@@ -7,11 +7,14 @@ GameScene::GameScene()
 
 GameScene::~GameScene() {
 	delete	player;
+	delete	enemy;
 };
 
 void GameScene::Initialize() {
 	player = new Player();
 	player->Initialize();
+	enemy = new	Enemy();
+	
 }
 
 void GameScene::Update() {
@@ -32,6 +35,7 @@ void GameScene::Update() {
 		{
 			scene = 1;
 			player->State();
+			enemy->Initialize(600, 400);
 		}
 		break;
 
@@ -45,7 +49,9 @@ void GameScene::Update() {
 
 		// ÉQÅ[ÉÄ
 	case 2:
+
 		player->Update(keys, oldkeys);
+		enemy->Update();
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 3;
@@ -89,6 +95,7 @@ void	GameScene::Draw() {
 		// ÉQÅ[ÉÄ
 	case 2:
 		player->Draw();
+		enemy->Draw();
 		DrawFormatString(0, 0, color, "ÉQÅ[ÉÄ");
 		break;
 

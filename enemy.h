@@ -1,12 +1,18 @@
 #pragma once
+#include"DxLib.h"
+#include"product.h"
+#include"player.h"
 
-class enemy
+class Player;
+
+
+class Enemy
 {
 public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void	Initialize();
+	void	Initialize(float	x_, float	y_);
 	/// <summary>
 	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
@@ -19,6 +25,9 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void	Draw();
+
+	float	SetPlayer(Player* player_) {  player = player_; };
+
 private:
 	float	posX;
 	float	posY;
@@ -26,4 +35,6 @@ private:
 	bool	flag;
 	float	range;
 	float	move;
+
+	Player* player = nullptr;
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include"player.h"
+#include"enemy.h"
 
 class GameScene
 {
@@ -26,4 +27,5 @@ private:
 	char oldkeys[256] = { 0 };
 	int scene = 0;
 	Player* player;
+	Enemy* enemy;
 };
