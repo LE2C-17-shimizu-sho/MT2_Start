@@ -15,7 +15,7 @@ void	Player::State() {
 
 void	Player::Update(char	key[], char	oldkey[]) {
 	move = 5;
-
+	//同時押しでスピード変更
 	if (key[KEY_INPUT_W]==1|| key[KEY_INPUT_S] == 1)
 	{
 		if ( key[KEY_INPUT_A] == 1 || key[KEY_INPUT_D] == 1)
@@ -24,6 +24,7 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		}
 	}
 
+	//移動処理
 	if (key[KEY_INPUT_W] == 1)
 		{
 			posY -= move;
