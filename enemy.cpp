@@ -2,7 +2,7 @@
 
 
 void	Enemy::Initialize(float	x_,float	y_) {
-	move = 10;
+	move = 5;
 	r = 20;
 	range = 120;
 	posX = x_;
@@ -10,7 +10,7 @@ void	Enemy::Initialize(float	x_,float	y_) {
 }
 
 void	Enemy::Update() {
-
+	OuterProduct(player->x_, posX, player->y_, posY, move);
 }
 
 void	Enemy::Draw() {

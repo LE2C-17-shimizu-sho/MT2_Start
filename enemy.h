@@ -26,7 +26,7 @@ public:
 	/// </summary>
 	void	Draw();
 
-	float	SetPlayer(Player* player_) {  player = player_; };
+	void	SetPlayer(Player* player_) {  player = player_; };
 
 private:
 	float	posX;

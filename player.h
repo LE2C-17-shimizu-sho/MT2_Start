@@ -21,9 +21,8 @@ public:
 	/// </summary>
 	void	Draw();
 
-	float	GetPossX();
-
-	float	GetPossY();
+	float	x_;
+	float	y_;
 
 private:
 	float	posX;

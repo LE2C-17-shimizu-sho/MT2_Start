@@ -11,6 +11,8 @@ void	Player::State() {
 	posX = 580;
 	posY = 260;
 	flag = true;
+	x_ = 0;
+	y_ = 0;
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
@@ -41,6 +43,9 @@ void	Player::Update(char	key[], char	oldkey[]) {
 	{
 		posX += move;
 	}
+	
+	x_ = posX;
+	y_ = posY;
 }
 
 void	Player::Draw() {
@@ -48,16 +53,4 @@ void	Player::Draw() {
 	DrawCircle(posX, posY, range, GetColor(255, 255, 255), false);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", posY);
-}
-
-float	Player::GetPossX(){
-	float	x_;
-	x_ = posX;
-	return	x_;
-}
-
-float	Player::GetPossY() {
-	float	y_;
-	y_ = posY;
-	return	y_;
 }
