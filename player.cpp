@@ -1,5 +1,5 @@
 #include"player.h"
-#include"DxLib.h"
+
 
 void	Player::Initialize() {
 	move = 10;
@@ -8,8 +8,8 @@ void	Player::Initialize() {
 }
 
 void	Player::State() {
-	posX = 300;
-	posY = 300;
+	posX = 580;
+	posY = 260;
 	flag = true;
 }
 
@@ -35,4 +35,6 @@ void	Player::Update(char	key[], char	oldkey[]) {
 void	Player::Draw() {
 	DrawCircle(posX, posY, r, GetColor(255, 255, 255), true);
 	DrawCircle(posX, posY, range, GetColor(255, 255, 255), false);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
+	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", posY);
 }

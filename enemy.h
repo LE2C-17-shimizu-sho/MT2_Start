@@ -1,7 +1,6 @@
 #pragma once
-#include"DxLib.h"
 
-class Player
+class enemy
 {
 public:
 	/// <summary>
@@ -15,7 +14,7 @@ public:
 	/// <summary>
 	/// XV
 	/// </summary>
-	void	Update(char	key[],char	oldkey[]);
+	void	Update();
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
