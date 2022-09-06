@@ -135,17 +135,23 @@
   <ItemGroup>
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="gamescene.cpp" />
+    <ClCompile Include="hit.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="product.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="enemy.h" />
     <ClInclude Include="gamescene.h" />
+    <ClInclude Include="hit.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="product.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
