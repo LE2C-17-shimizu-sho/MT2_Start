@@ -16,7 +16,7 @@ void GameScene::Initialize() {
 	enemy = new	Enemy();
 	map = new	Map();
 	map->Initialize();
-	groundHandle = LoadGraph("./Resouces/backGround.png");
+	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
 void GameScene::Update() {

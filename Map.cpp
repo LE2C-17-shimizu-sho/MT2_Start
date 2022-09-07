@@ -3,7 +3,7 @@
 void Map::Initialize()
 {
 	// ‰æ‘œ‚ğ‰Šú‰»
-	block = LoadGraph("./Resouces/block.png");
+	block = LoadGraph("./Resources/block.png");
 }
 
 void Map::Update()
