@@ -1,5 +1,6 @@
 #pragma once
 
+#include"player.h"
 #include "Dxlib.h"
 #define STAGE_WIDTH (5760)
 #define STAGE_HEIGHT (3136)
@@ -7,6 +8,8 @@
 #define MAPCHIP_HEIGHT (64)
 #define MAP_SIZE_WIDTH (STAGE_WIDTH / MAPCHIP_WIDTH)
 #define MAP_SIZE_HEIGHT (STAGE_HEIGHT / MAPCHIP_HEIGHT)
+
+class Player;
 
 class Map
 {
@@ -20,7 +23,11 @@ public:
 	// ï`âÊ
 	void Draw();
 
+	void	SetPlayer(Player* player_) { player = player_; };
+
 private:
+	Player* player;
+
 	// ÉuÉçÉbÉNÇÃâÊëú
 	int block = 0;
 

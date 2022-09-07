@@ -31,5 +31,5 @@ private:
 	float	posX;
 	float	posY;
 	bool	flag;
-	float	move = 5.0f;
+	float	move;
 };

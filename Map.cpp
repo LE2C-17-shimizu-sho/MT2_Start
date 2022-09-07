@@ -3,7 +3,7 @@
 void Map::Initialize()
 {
 	// ‰æ‘œ‚ğ‰Šú‰»
-	block = LoadGraph("block.png");
+	block = LoadGraph("./Resouces/block.png");
 }
 
 void Map::Update()
@@ -14,13 +14,13 @@ void Map::Update()
 void Map::Draw()
 {
 	// •`‰æˆ—
-	for (int y = 0; y < 45; y++)
+	for (int y = 0; y < 49; y++)
 	{
-		for (int x = 0; x < 80; x++)
+		for (int x = 0; x < 90; x++)
 		{
 			if (map[y][x] == 1)
 			{
-				DrawGraph(x * BLOCK_SIZE, y * BLOCK_SIZE, block, true);
+				DrawGraph((x * BLOCK_SIZE)-player->scrollX, (y * BLOCK_SIZE) - player->scrollY, block, true);
 			}
 		}
 	}

@@ -8,11 +8,14 @@ GameScene::GameScene()
 GameScene::~GameScene() {
 	delete	player;
 	delete	enemy;
+	delete	map;
 };
 
 void GameScene::Initialize() {
 	player = new Player();
 	enemy = new	Enemy();
+	map = new	Map();
+	map->Initialize();
 	groundHandle = LoadGraph("./Resouces/backGround.png");
 }
 
@@ -36,6 +39,7 @@ void GameScene::Update() {
 			player->State();
 			enemy->Initialize(400, 600);
 			enemy->SetPlayer(player);
+			map->SetPlayer(player);
 		}
 		break;
 
@@ -83,8 +87,7 @@ void	GameScene::Draw() {
 		// タイトル
 	case 0:
 		DrawFormatString(0, 0, color, "タイトル");
-		DrawCircle(370, 640, 20, GetColor(255, 255, 255), true);
-		DrawCircle(370, 640, 120, GetColor(255, 255, 255), false);
+	
 		break;
 
 		// 操作説明
@@ -97,6 +100,7 @@ void	GameScene::Draw() {
 		DrawGraph(0-player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		enemy->Draw();
+		map->Draw();
 		DrawFormatString(0, 0, color, "ゲーム");
 		break;
 

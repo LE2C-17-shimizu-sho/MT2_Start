@@ -2,6 +2,7 @@
 #include"player.h"
 #include"enemy.h"
 #include"hit.h"
+#include"Map.h"
 
 class GameScene
 {
@@ -32,5 +33,6 @@ private:
 	int scene = 0;
 	Player* player;
 	Enemy* enemy;
+	Map* map;
 	int	groundHandle;
 };
