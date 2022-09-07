@@ -16,41 +16,51 @@ void	Player::State() {
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
-	move = 4;
-	//同時押しでスピード変更
-	if (key[KEY_INPUT_W]==1|| key[KEY_INPUT_S] == 1)
+	if (flag)
 	{
-		if ( key[KEY_INPUT_A] == 1 || key[KEY_INPUT_D] == 1)
+		move = 4;
+		//同時押しでスピード変更
+		if (key[KEY_INPUT_W] == 1 || key[KEY_INPUT_S] == 1)
 		{
-			move = 2;
+			if (key[KEY_INPUT_A] == 1 || key[KEY_INPUT_D] == 1)
+			{
+				move = 2;
+			}
 		}
-	}
 
-	//移動処理
-	if (key[KEY_INPUT_W] == 1)
+		//移動処理
+		if (key[KEY_INPUT_W] == 1)
 		{
 			posY -= move;
 		}
-	if (key[KEY_INPUT_S] == 1)
-	{
-		posY += move;
+		if (key[KEY_INPUT_S] == 1)
+		{
+			posY += move;
+		}
+		if (key[KEY_INPUT_A] == 1)
+		{
+			posX -= move;
+		}
+		if (key[KEY_INPUT_D] == 1)
+		{
+			posX += move;
+		}
+
+		x_ = posX;
+		y_ = posY;
 	}
-	if (key[KEY_INPUT_A] == 1)
-	{
-			posX -= move;			
-	}
-	if (key[KEY_INPUT_D] == 1)
-	{
-		posX += move;
-	}
-	
-	x_ = posX;
-	y_ = posY;
 }
 
 void	Player::Draw() {
-	DrawCircle(posX, posY, r, GetColor(255, 255, 255), true);
-	DrawCircle(posX, posY, range, GetColor(255, 255, 255), false);
+	if (flag)
+	{
+		DrawCircle(posX, posY, r, GetColor(255, 255, 255), true);
+		DrawCircle(posX, posY, range, GetColor(255, 255, 255), false);
+	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", posY);
+}
+
+void	Player::OnCollision() {
+	flag = false;
 }

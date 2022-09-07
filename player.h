@@ -21,6 +21,8 @@ public:
 	/// </summary>
 	void	Draw();
 
+	void OnCollision();
+
 	float	x_;
 	float	y_;
 	float	r;

@@ -129,8 +129,18 @@ void	GameScene::CheckAll() {
 		if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
 		{
 			enemy->OnCollision();
-			DrawFormatString(0, 150, GetColor(255, 255, 255), "hit");
 		}
-		
+	}
+	//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
+	{
+		r1_ = player->r;
+		x2_ = enemy->posX;
+		y2_ = enemy->posY;
+		r2_ = enemy->r;
+		if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+		{
+			player->OnCollision();
+		}
+
 	}
 }
