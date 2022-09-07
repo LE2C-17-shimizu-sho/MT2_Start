@@ -35,7 +35,7 @@ void GameScene::Update() {
 		{
 			scene = 1;
 			player->State();
-			enemy->Initialize(700, 800);
+			enemy->Initialize(400, 600);
 			enemy->SetPlayer(player);
 		}
 		break;
@@ -50,7 +50,7 @@ void GameScene::Update() {
 
 		// ƒQ[ƒ€
 	case 2:
-
+		CheckAll();
 		player->Update(keys, oldkeys);
 		enemy->Update();
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
@@ -111,4 +111,26 @@ void	GameScene::Draw() {
 		break;
 	}
 	DrawFormatString(0, 30, color, "scene = %d", scene);
+}
+
+void	GameScene::CheckAll() {
+	float	x1_ = player->x_;
+	float	y1_ = player->y_;
+	float	r1_;
+	float	x2_;
+	float	y2_;
+	float	r2_;
+	//“G‚Æ‹z‚¢ž‚Þ”ÍˆÍ‚Ì“–‚½‚è”»’è
+	{
+		r1_=player->range;
+		x2_=enemy->posX;
+		y2_=enemy->posY;
+		r2_=enemy->r;
+		if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+		{
+			enemy->OnCollision();
+			DrawFormatString(0, 150, GetColor(255, 255, 255), "hit");
+		}
+		
+	}
 }

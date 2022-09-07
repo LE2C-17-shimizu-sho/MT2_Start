@@ -1,6 +1,7 @@
 #pragma once
 #include"player.h"
 #include"enemy.h"
+#include"hit.h"
 
 class GameScene
 {
@@ -19,6 +20,9 @@ public:
 	/// 描画
 	/// </summary>
 	void	Draw();
+
+	void	CheckAll();
+
 private:
 	// 最新のキーボード情報用
 	char keys[256] = { 0 };

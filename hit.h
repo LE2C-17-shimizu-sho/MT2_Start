@@ -2,7 +2,7 @@
 #include<math.h>
 
 //‹éŒ`
-int	CheckHit(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
+float	CheckBox(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2);
 
 //‰~
-int	CheckHit(int x1, int y1, int r1, int x2, int y2, int r2);
+float	CheckCircle(float x1, float y1, float r1, float x2, float y2, float r2);

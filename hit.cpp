@@ -1,10 +1,10 @@
 #include"hit.h"
 //‹éŒ`
-int	CheckHit(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-	int cl1 = x1;
-	int	cr1 = x1 + w1;
-	int cl2 = x2;
-	int	cr2 = x2 + w2;
+float	CheckBox(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2) {
+	float cl1 = x1;
+	float	cr1 = x1 + w1;
+	float cl2 = x2;
+	float	cr2 = x2 + w2;
 
 	if (cr1 <= cl2)
 	{
@@ -16,10 +16,10 @@ int	CheckHit(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
 		return	0;
 	}
 
-	int	cu1 = y1;
-	int	cd1 = y1 + h1;
-	int	cu2 = y2;
-	int	cd2 = y2 + h2;
+	float	cu1 = y1;
+	float	cd1 = y1 + h1;
+	float	cu2 = y2;
+	float	cd2 = y2 + h2;
 
 	if (cd1 <= cu2)
 	{
@@ -35,10 +35,10 @@ int	CheckHit(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
 }
 
 //‰~
-int	CheckHit(int x1, int y1, int r1, int x2, int y2, int r2) {
-	int sum_x = (x1 - x2) * (x1 - x2);
-	int	sum_y = (y1 - y2) * (y1 - y2);
-	int sum_r = (r1 + r2) * (r1 + r2);
+float	CheckCircle(float x1, float y1, float r1, float x2, float y2, float r2) {
+	float sum_x = (x1 - x2) * (x1 - x2);
+	float	sum_y = (y1 - y2) * (y1 - y2);
+	float sum_r = (r1 + r2) * (r1 + r2);
 
 
 	if (sum_r > sum_y + sum_x)

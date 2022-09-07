@@ -23,12 +23,12 @@ public:
 
 	float	x_;
 	float	y_;
+	float	r;
+	float	range;
 
 private:
 	float	posX;
 	float	posY;
-	float	r;
 	bool	flag;
-	float	range;
 	float	move;
 };

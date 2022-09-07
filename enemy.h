@@ -28,10 +28,13 @@ public:
 
 	void	SetPlayer(Player* player_) {  player = player_; };
 
-private:
+	void OnCollision();
+
 	float	posX;
 	float	posY;
 	float	r;
+private:
+	bool	collisionFlag;
 	bool	flag;
 	float	range;
 	float	move;
