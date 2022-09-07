@@ -5,7 +5,6 @@ void	Enemy::Initialize(float	x_,float	y_) {
 
 	posX = x_;
 	posY = y_;
-	collisionFlag = false;
 }
 
 void	Enemy::Update() {
@@ -13,7 +12,7 @@ void	Enemy::Update() {
 }
 
 void	Enemy::Draw() {
-	DrawCircle(posX, posY, r, GetColor(255,0,0), true);
+	DrawCircle(posX-player->scrollX, posY - player->scrollY, r, GetColor(0,255,0), true);
 }
 
 void	Enemy::OnCollision() {

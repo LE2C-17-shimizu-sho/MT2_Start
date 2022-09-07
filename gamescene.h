@@ -32,4 +32,5 @@ private:
 	int scene = 0;
 	Player* player;
 	Enemy* enemy;
+	int	groundHandle;
 };

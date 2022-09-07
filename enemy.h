@@ -34,9 +34,8 @@ public:
 	float	posY;
 	float	r = 20.0f;
 private:
-	bool	collisionFlag;
 	bool	flag;
-	float	move = 3.0f;
+	float	move = 3.5f;
 	
 	
 

@@ -12,9 +12,8 @@ GameScene::~GameScene() {
 
 void GameScene::Initialize() {
 	player = new Player();
-	player->Initialize();
 	enemy = new	Enemy();
-	
+	groundHandle = LoadGraph("./Resouces/backGround.png");
 }
 
 void GameScene::Update() {
@@ -95,6 +94,7 @@ void	GameScene::Draw() {
 
 		// ÉQÅ[ÉÄ
 	case 2:
+		DrawGraph(0-player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		enemy->Draw();
 		DrawFormatString(0, 0, color, "ÉQÅ[ÉÄ");

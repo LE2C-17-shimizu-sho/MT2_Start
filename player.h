@@ -4,10 +4,7 @@
 class Player
 {
 public:
-	/// <summary>
-	/// ‰Šú‰»
-	/// </summary>
-	void	Initialize();
+
 	/// <summary>
 	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
@@ -25,8 +22,10 @@ public:
 
 	float	x_;
 	float	y_;
-	float	r = 20.0f;;
-	float	range = 120.0f;
+	const	float	r = 20.0f;;
+	const	float	range = 120.0f;
+	float	scrollX;
+	float	scrollY;
 
 private:
 	float	posX;
