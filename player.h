@@ -25,12 +25,12 @@ public:
 
 	float	x_;
 	float	y_;
-	float	r;
-	float	range;
+	float	r = 20.0f;;
+	float	range = 120.0f;
 
 private:
 	float	posX;
 	float	posY;
 	bool	flag;
-	float	move;
+	float	move = 5.0f;
 };

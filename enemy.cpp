@@ -2,9 +2,7 @@
 
 
 void	Enemy::Initialize(float	x_,float	y_) {
-	move = 3;
-	r = 20;
-	range = 120;
+
 	posX = x_;
 	posY = y_;
 	collisionFlag = false;

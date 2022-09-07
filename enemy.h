@@ -32,12 +32,13 @@ public:
 
 	float	posX;
 	float	posY;
-	float	r;
+	float	r = 20.0f;
 private:
 	bool	collisionFlag;
 	bool	flag;
-	float	range;
-	float	move;
+	float	move = 3.0f;
+	
+	
 
 	Player* player = nullptr;
 };

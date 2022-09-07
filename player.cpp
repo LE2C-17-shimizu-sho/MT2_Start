@@ -1,30 +1,23 @@
 #include"player.h"
 
-
-void	Player::Initialize() {
-	move = 5;
-	r = 20;
-	range = 120;
-}
-
 void	Player::State() {
-	posX = 580;
-	posY = 260;
+	posX = 580.0f;
+	posY = 260.0f;
 	flag = true;
-	x_ = 0;
-	y_ = 0;
+	x_ = 0.0f;
+	y_ = 0.0f;
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
 	if (flag)
 	{
-		move = 4;
+		move = 4.0f;
 		//同時押しでスピード変更
 		if (key[KEY_INPUT_W] == 1 || key[KEY_INPUT_S] == 1)
 		{
 			if (key[KEY_INPUT_A] == 1 || key[KEY_INPUT_D] == 1)
 			{
-				move = 2;
+				move = 2.0f;
 			}
 		}
 
