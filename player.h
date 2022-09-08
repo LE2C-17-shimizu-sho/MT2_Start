@@ -37,7 +37,11 @@ public:
 	bool	flag;
 
 private:
+	int	handle;
 	float	posX;
 	float	posY;
 	float	move;
+	const	int	time = 30;
+	int	timer;
+	int	num;
 };

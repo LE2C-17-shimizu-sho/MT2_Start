@@ -7,6 +7,7 @@ void	Player::State() {
 	flag = true;
 	x_ = 0.0f;
 	y_ = 0.0f;
+	handle = LoadGraph("./Resources/Player.png");
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
@@ -70,18 +71,31 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		
 		x_ = posX;
 		y_ = posY;
+
+		//˜A”Ô‰æ‘œ
+		if (timer-- <= 0)
+		{
+			num++;
+			timer = time;
+			if (num == 6)
+			{
+				num = 0;
+			}
+		}
+
 	}
 }
 
 void	Player::Draw() {
 	if (flag)
 	{
-		DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
+		//DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
+		DrawRectGraph(posX - r - scrollX, posY - r - scrollY, num * (r * 2), 0, 40, 40, handle, TRUE, FALSE);
 		DrawCircle(posX - scrollX, posY - scrollY, range, GetColor(255, 255, 255), false);
 	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", scrollX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", scrollY);
-	DrawFormatString(0, 120, GetColor(255, 255, 255), "posx=%f", posX);
+	DrawFormatString(0, 120, GetColor(255, 255, 255), "%d", num);
 }
 
 void	Player::OnCollision() {
