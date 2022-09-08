@@ -43,6 +43,26 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			scrollX += move;
 		}
 
+		//ƒXƒNƒ[ƒ‹ˆ—
+			//--Å¬--//
+		if (posX<640)
+		{
+			scrollX = 0;
+		}
+		if (posY < 320)
+		{
+			scrollY = 0;
+		}
+			//--Å‘å--//
+		if (posX >5120)
+		{
+			scrollX = 4480;
+		}
+		if (posY >2655)
+		{
+			scrollY = 2420;
+		}
+		
 		x_ = posX;
 		y_ = posY;
 	}
