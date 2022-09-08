@@ -12,15 +12,17 @@ void	Player::State() {
 void	Player::Update(char	key[], char	oldkey[]) {
 	if (flag)
 	{
-		x_ = posX;
-		y_ = posY;
+		oldX = posX;
+		oldY = posY;
+		oldScrollX = scrollX;
+		oldScrollY = scrollY;
 		move = 4.0f;
 		//同時押しでスピード変更
 		if (key[KEY_INPUT_W] == 1 || key[KEY_INPUT_S] == 1)
 		{
 			if (key[KEY_INPUT_A] == 1 || key[KEY_INPUT_D] == 1)
 			{
-				move = 2.5f;
+				move = 2.0f;
 			}
 		}
 
@@ -66,6 +68,8 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			scrollY = 2416;
 		}
 		
+		x_ = posX;
+		y_ = posY;
 	}
 }
 
@@ -77,9 +81,19 @@ void	Player::Draw() {
 	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", scrollX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", scrollY);
-	DrawFormatString(0, 120, GetColor(255, 255, 255), "Y=%f", posX);
+	DrawFormatString(0, 120, GetColor(255, 255, 255), "posx=%f", posX);
 }
 
 void	Player::OnCollision() {
 	flag = false;
+}
+
+void	Player::MapCollisionX() {
+	posX = oldX;
+	scrollX = oldScrollX;
+}
+
+void	Player::MapCollisionY() {
+	posY = oldY;
+	scrollY = oldScrollY;
 }

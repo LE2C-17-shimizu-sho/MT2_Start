@@ -20,12 +20,20 @@ public:
 
 	void OnCollision();
 
+	void	MapCollisionX();
+
+	void	MapCollisionY();
+
 	float	x_;
 	float	y_;
+	float	oldX;
+	float	oldY;
 	const	float	r = 20.0f;;
-	const	float	range = 120.0f;
+	const	float	range = 140.0f;
 	float	scrollX;
 	float	scrollY;
+	float	oldScrollX;
+	float	oldScrollY;
 
 private:
 	float	posX;

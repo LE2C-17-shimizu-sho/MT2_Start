@@ -37,7 +37,7 @@ void GameScene::Update() {
 		{
 			scene = 1;
 			player->State();
-			enemy->Initialize(400, 600);
+			enemy->Initialize(650, 1400);
 			enemy->SetPlayer(player);
 			map->SetPlayer(player);
 		}
@@ -56,6 +56,8 @@ void GameScene::Update() {
 		CheckAll();
 		player->Update(keys, oldkeys);
 		enemy->Update();
+		map->Update();
+
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 3;

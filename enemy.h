@@ -32,10 +32,10 @@ public:
 
 	float	posX;
 	float	posY;
-	float	r = 20.0f;
+	float	r = 40.0f;
 private:
 	bool	flag;
-	float	move = 3.5f;
+	float	move = 3.4f;
 	
 	
 
