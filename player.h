@@ -29,7 +29,7 @@ public:
 	float	oldX;
 	float	oldY;
 	const	float	r = 20.0f;;
-	const	float	range = 140.0f;
+	const	float	range = 145.0f;
 	float	scrollX;
 	float	scrollY;
 	float	oldScrollX;

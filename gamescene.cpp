@@ -37,7 +37,7 @@ void GameScene::Update() {
 		{
 			scene = 1;
 			player->State();
-			enemy->Initialize(650, 1400);
+			enemy->Initialize(650, 1420);
 			enemy->SetPlayer(player);
 			map->SetPlayer(player);
 		}
