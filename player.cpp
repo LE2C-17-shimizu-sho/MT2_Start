@@ -1,8 +1,9 @@
 #include"player.h"
 
 void	Player::State() {
-	posX = 640.0f;
+	posX = 500.0f;
 	posY = 320.0f;
+	scrollX, scrollY = 0;
 	flag = true;
 	x_ = 0.0f;
 	y_ = 0.0f;
