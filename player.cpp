@@ -58,9 +58,9 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		{
 			scrollX = 4480;
 		}
-		if (posY >2655)
+		if (posY >2736)
 		{
-			scrollY = 2420;
+			scrollY = 2416;
 		}
 		
 		x_ = posX;
@@ -76,6 +76,7 @@ void	Player::Draw() {
 	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", scrollX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", scrollY);
+	DrawFormatString(0, 120, GetColor(255, 255, 255), "Y=%f", posY);
 }
 
 void	Player::OnCollision() {
