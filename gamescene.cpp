@@ -7,13 +7,19 @@ GameScene::GameScene()
 
 GameScene::~GameScene() {
 	delete	player;
-	delete	enemy;
+	for (size_t i = 0; i < numE; i++)
+	{
+		delete	enemy[i];
+	}
 	delete	map;
 };
 
 void GameScene::Initialize() {
 	player = new Player();
-	enemy = new	Enemy();
+	for (size_t i = 0; i < numE; i++)
+	{
+		enemy[i] = new	Enemy();
+	}
 	map = new	Map();
 	map->Initialize();
 	groundHandle = LoadGraph("./Resources/backGround.png");
@@ -37,10 +43,13 @@ void GameScene::Update() {
 		{
 			scene = 1;
 			player->State();
-			enemy->Initialize(650, 1420);
-			enemy->SetPlayer(player);
+			for (size_t i = 0; i < numE; i++)
+			{
+				enemy[i]->Initialize(enemyPos[i][0], enemyPos[i][1]);
+				enemy[i]->SetPlayer(player);
+				map->SetEnemy(enemy[i]);
+			}
 			map->SetPlayer(player);
-			map->SetEnemy(enemy);
 		}
 		break;
 
@@ -56,7 +65,10 @@ void GameScene::Update() {
 	case 2:
 		CheckAll();
 		player->Update(keys, oldkeys);
-		enemy->Update();
+		for (size_t i = 0; i < numE; i++)
+		{
+			enemy[i]->Update();
+		}
 		map->Update();
 
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
@@ -102,7 +114,10 @@ void	GameScene::Draw() {
 	case 2:
 		DrawGraph(0-player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
-		enemy->Draw();
+		for (size_t i = 0; i < numE; i++)
+		{
+			enemy[i]->Draw();
+		}
 		map->Draw();
 		DrawFormatString(0, 0, color, "ƒQ[ƒ€");
 		break;
@@ -127,30 +142,33 @@ void	GameScene::CheckAll() {
 	float	x2_;
 	float	y2_;
 	float	r2_;
-	if (player->flag&&enemy->flag)
+	for (size_t i = 0; i < numE; i++)
 	{
-		//“G‚Æ‹z‚¢ž‚Þ”ÍˆÍ‚Ì“–‚½‚è”»’è
+		if (player->flag && enemy[i]->flag)
 		{
-			r1_ = player->range;
-			x2_ = enemy->posX;
-			y2_ = enemy->posY;
-			r2_ = enemy->r;
-			if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+			//“G‚Æ‹z‚¢ž‚Þ”ÍˆÍ‚Ì“–‚½‚è”»’è
 			{
-				enemy->OnCollision();
+				r1_ = player->range;
+				x2_ = enemy[i]->posX;
+				y2_ = enemy[i]->posY;
+				r2_ = enemy[i]->r;
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					enemy[i]->OnCollision();
+				}
 			}
-		}
-		//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
-		{
-			r1_ = player->r;
-			x2_ = enemy->posX;
-			y2_ = enemy->posY;
-			r2_ = enemy->r;
-			if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+			//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
 			{
-				player->OnCollision();
-			}
+				r1_ = player->r;
+				x2_ = enemy[i]->posX;
+				y2_ = enemy[i]->posY;
+				r2_ = enemy[i]->r;
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					player->OnCollision();
+				}
 
+			}
 		}
 	}
 }
