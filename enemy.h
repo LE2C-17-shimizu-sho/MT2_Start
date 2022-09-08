@@ -30,11 +30,13 @@ public:
 
 	void OnCollision();
 
+	void	DeathCollision();
+
 	float	posX;
 	float	posY;
 	float	r = 40.0f;
-private:
 	bool	flag;
+private:
 	float	move = 3.4f;
 	
 	

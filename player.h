@@ -34,10 +34,10 @@ public:
 	float	scrollY;
 	float	oldScrollX;
 	float	oldScrollY;
+	bool	flag;
 
 private:
 	float	posX;
 	float	posY;
-	bool	flag;
 	float	move;
 };

@@ -40,6 +40,7 @@ void GameScene::Update() {
 			enemy->Initialize(650, 1420);
 			enemy->SetPlayer(player);
 			map->SetPlayer(player);
+			map->SetEnemy(enemy);
 		}
 		break;
 
@@ -126,27 +127,30 @@ void	GameScene::CheckAll() {
 	float	x2_;
 	float	y2_;
 	float	r2_;
-	//“G‚Æ‹z‚¢ž‚Þ”ÍˆÍ‚Ì“–‚½‚è”»’è
+	if (player->flag&&enemy->flag)
 	{
-		r1_=player->range;
-		x2_=enemy->posX;
-		y2_=enemy->posY;
-		r2_=enemy->r;
-		if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+		//“G‚Æ‹z‚¢ž‚Þ”ÍˆÍ‚Ì“–‚½‚è”»’è
 		{
-			enemy->OnCollision();
+			r1_ = player->range;
+			x2_ = enemy->posX;
+			y2_ = enemy->posY;
+			r2_ = enemy->r;
+			if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+			{
+				enemy->OnCollision();
+			}
 		}
-	}
-	//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
-	{
-		r1_ = player->r;
-		x2_ = enemy->posX;
-		y2_ = enemy->posY;
-		r2_ = enemy->r;
-		if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+		//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
 		{
-			player->OnCollision();
-		}
+			r1_ = player->r;
+			x2_ = enemy->posX;
+			y2_ = enemy->posY;
+			r2_ = enemy->r;
+			if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+			{
+				player->OnCollision();
+			}
 
+		}
 	}
 }

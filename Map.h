@@ -1,5 +1,6 @@
 #pragma once
 
+#include"enemy.h"
 #include"player.h"
 #include "Dxlib.h"
 #include"hit.h"
@@ -11,6 +12,8 @@
 #define MAP_SIZE_HEIGHT (STAGE_HEIGHT / MAPCHIP_HEIGHT)
 
 class Player;
+
+class Enemy;
 
 class Map
 {
@@ -25,9 +28,11 @@ public:
 	void Draw();
 
 	void	SetPlayer(Player* player_) { player = player_; };
+	void	SetEnemy(Enemy* enemy_) { enemy = enemy_; };
 
 private:
 	Player* player;
+	Enemy* enemy;
 
 	// ƒuƒƒbƒN‚Ì‰æ‘œ
 	int block = 0;
