@@ -1,7 +1,7 @@
 #include"player.h"
 
 void	Player::State() {
-	posX = 500.0f;
+	posX = 452.0f;
 	posY = 320.0f;
 	scrollX, scrollY = 0;
 	flag = true;
@@ -77,7 +77,7 @@ void	Player::Draw() {
 	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", scrollX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", scrollY);
-	DrawFormatString(0, 120, GetColor(255, 255, 255), "Y=%f", posY);
+	DrawFormatString(0, 120, GetColor(255, 255, 255), "Y=%f", posX);
 }
 
 void	Player::OnCollision() {
