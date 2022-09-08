@@ -1,7 +1,7 @@
 #include"player.h"
 
 void	Player::State() {
-	posX = 452.0f;
+	posX = 640.0f;
 	posY = 320.0f;
 	scrollX, scrollY = 0;
 	flag = true;
@@ -12,6 +12,8 @@ void	Player::State() {
 void	Player::Update(char	key[], char	oldkey[]) {
 	if (flag)
 	{
+		x_ = posX;
+		y_ = posY;
 		move = 4.0f;
 		//同時押しでスピード変更
 		if (key[KEY_INPUT_W] == 1 || key[KEY_INPUT_S] == 1)
@@ -64,8 +66,6 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			scrollY = 2416;
 		}
 		
-		x_ = posX;
-		y_ = posY;
 	}
 }
 
