@@ -17,6 +17,9 @@ const int WIN_HEIGHT = 720;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 	_In_ int nCmdShow)
 {
+	// Log.texを消す処理
+	SetOutApplicationLogValidFlag(FALSE);
+
 	// ウィンドウモードに設定
 	ChangeWindowMode(TRUE);
 
