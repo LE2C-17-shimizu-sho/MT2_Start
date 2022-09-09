@@ -62,6 +62,7 @@ void GameScene::Update() {
 			{
 				box[i]->Initialize(boxPos[i][0], boxPos[i][1]);
 				box[i]->SetPlayer(player);
+				map->SetBox(box[i], i);
 			}
 		}
 		break;
@@ -78,7 +79,10 @@ void GameScene::Update() {
 	case 2:
 		CheckAll();
 		player->Update(keys, oldkeys);
-		
+		for (size_t i = 0; i < numB; i++)
+		{
+			box[i]->Update();
+		}
 		
 		//enemy_[0]->Update();
 		
@@ -125,7 +129,8 @@ void	GameScene::Draw() {
 
 		// ƒQ[ƒ€
 	case 2:
-		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		map->Draw();
+		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		for (size_t i = 0; i < numE; i++)
 		{
@@ -135,7 +140,6 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
-		map->Draw();
 		DrawFormatString(0, 0, color, "ƒQ[ƒ€");
 		break;
 
@@ -203,20 +207,30 @@ void	GameScene::CheckAll() {
 				h_ = box[i]->higth;
 				if (CheckCircleDot4(x1_, y1_, r1_, x2_, y2_,w_,h_))
 				{
-					DrawFormatString(0, 180, GetColor(255, 255, 255), "hit");
+					box[i]->HomingCollision();
+					DrawFormatString(200, 200, GetColor(255, 255, 255), "3");
 				}
 				
 			}
-			//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
+			//” ‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
 			{
-				//r1_ = player->r;
-				//x2_ = box[i]->posX;
-				//y2_ = box[i]->posY;
-				//r2_ = box[i]->r;
-				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
-				//{
-				//	player->OnCollision();
-				//}
+				r1_ = player->r;
+				x2_ = box[i]->posX;
+				y2_ = box[i]->posY;
+				w_ = box[i]->width;
+				h_ = box[i]->higth;
+				if (CheckCircleDot4(x1_, y1_, r1_, x2_, y2_, w_, h_))
+				{
+					
+				}
+				if (CheckBoxCircle(x1_, y1_, r1_, x2_, y2_, w_, h_))
+				{
+					box[i]->OnCollisionX();
+					box[i]->OnCollisionY();
+					player->MapCollisionX();
+					player->MapCollisionY();
+
+				}
 
 			}
 		}

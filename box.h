@@ -23,20 +23,26 @@ public:
 	/// </summary>
 	void	Draw();
 
-	void OnCollision();
+	void OnCollisionX();
+
+	void OnCollisionY();
+
+	void HomingCollision();
 	
 	void	SetPlayer(Player* player_) { player = player_; };
 
 	float	posX;
 	float	posY;
-	const	float	width = 256;
-	const	float	higth = 256;
+	float	width = 250;
+	float	higth = 250;
 	bool	flag;
 	bool	rFlag;
 private:
-	const	float	move = 3.4f;
+	const	float	move = 2.0f;
 	float	oldX;
 	float	oldY;
+	float   x_;
+	float	y_;
 
 	Player* player;
 };

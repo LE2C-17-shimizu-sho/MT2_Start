@@ -8,6 +8,7 @@ void	Player::State() {
 	x_ = 0.0f;
 	y_ = 0.0f;
 	handle = LoadGraph("./Resources/Player.png");
+	lightHandle = LoadGraph("./Resources/light.png");
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
@@ -107,6 +108,7 @@ void	Player::Draw() {
 	{
 		//DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
 		DrawRectGraph(posX - r - scrollX, posY - r - scrollY, num * (r * 2), 0, 40, 40, handle, TRUE, FALSE);
+		DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
 		DrawCircle(posX - scrollX, posY - scrollY, range, GetColor(255, 255, 255), false);
 	}
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);

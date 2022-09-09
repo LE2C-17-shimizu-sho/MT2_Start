@@ -38,6 +38,7 @@ public:
 
 private:
 	int	handle;
+	int	lightHandle;
 	float	posX;
 	float	posY;
 	float	move;

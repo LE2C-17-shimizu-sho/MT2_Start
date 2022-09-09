@@ -34,13 +34,33 @@ void Map::Update()
 				{
 					for (size_t k = 0; k < 14; k++)
 					{
-						if (CheckBoxCircle(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						if (CheckCircleDot4(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 						{
 							enemy_[k]->DeathCollision();
 						}
 					}
 				}
-				
+
+				//” ‚Ì“–‚½‚è”»’è
+				{
+					for (size_t i = 0; i < 2; i++)
+					{
+
+						if (CheckSide1(box[i]->posX, box[i]->posY, (box[i]->higth/2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
+							CheckSide3(box[i]->posX, box[i]->posY, (box[i]->higth / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						{
+							DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
+							box[i]->OnCollisionX();
+
+						}
+						if (CheckSide2(box[i]->posX, box[i]->posY, (box[i]->width / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
+							CheckSide4(box[i]->posX, box[i]->posY, (box[i]->width / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						{
+							DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
+							box[i]->OnCollisionY();
+						}
+					}
+				}
 				
 				//if (CheckSide1(player->x_,player->y_,player->r, MAPCHIP_WIDTH*x, MAPCHIP_HEIGHT*y,  MAPCHIP_WIDTH , MAPCHIP_HEIGHT))
 				//{

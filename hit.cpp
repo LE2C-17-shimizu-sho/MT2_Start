@@ -215,7 +215,6 @@ bool	CheckCircleDot(float	x1, float	y1, float	r, float	x2, float	y2) {
 	
 	if (dr >= dx + dy)
 	{
-		DrawFormatString(0, 220, GetColor(255, 255, 255), "hit");
 		return	true;
 	}
 	return	false;

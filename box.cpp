@@ -11,6 +11,8 @@ void	Box::Initialize(float	x_, float	y_) {
 void	Box::Update() {
 	oldX = posX;
 	oldY = posY;
+	x_ = posX - width / 2;
+	y_ = posY - higth / 2;
 }
 
 void	Box::Draw() {
@@ -18,6 +20,14 @@ void	Box::Draw() {
 	//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
 }
 
-void	Box::OnCollision() {
-	OuterProduct(player->x_, posX, player->y_, posY, move);
+void	Box::OnCollisionX() {
+	posX = oldX;
+}
+
+void	Box::OnCollisionY() {
+	posY = oldY;
+}
+
+void	Box::HomingCollision() {
+	posX -= move;
 }
