@@ -3,8 +3,10 @@
 #include"enemy.h"
 #include"hit.h"
 #include"Map.h"
+#include"box.h"
 
 const	int	numE=14;
+const	int	numB = 2;
 
 class GameScene
 {
@@ -36,6 +38,7 @@ private:
 	Player* player;
 	Enemy* enemy_[numE];
 	Map* map;
+	Box* box[numB];
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
 		//{650, 1420},
@@ -53,5 +56,10 @@ private:
 		{4096,1920},
 		{4352,2752},
 		{3264,2496}
+	};
+	int	boxPos[numB][2] = {
+		//{650, 1420},
+		{1024, 2688},
+		{2688,512}
 	};
 };

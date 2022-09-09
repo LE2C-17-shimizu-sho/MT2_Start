@@ -206,3 +206,27 @@ float	CheckCircle(float x1, float y1, float r1, float x2, float y2, float r2) {
 	}
 	return	0;
 }
+//“_‚Æ‰~
+bool	CheckCircleDot(float	x1, float	y1, float	r, float	x2, float	y2) {
+	float	dx= (x1 - x2) * (x1 - x2);
+	float	dy = (y1 - y2) * (y1 - y2);
+	float	dr = r * r;
+	//DrawFormatString(0, 200, GetColor(255, 255, 255), "%f", dx);
+	
+	if (dr >= dx + dy)
+	{
+		DrawFormatString(0, 220, GetColor(255, 255, 255), "hit");
+		return	true;
+	}
+	return	false;
+};
+
+//4“_‚Æ‰~
+bool	CheckCircleDot4(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h)
+{
+	if (CheckCircleDot(x1, y1, r, x2, y2)) { return	true; };
+	if (CheckCircleDot(x1, y1, r, x2, y2 + h)) { return	true; };
+	if (CheckCircleDot(x1, y1, r, x2 + w, y2)) { return	true; };
+	if (CheckCircleDot(x1, y1, r, x2 + w, y2 + h)) { return	true; };
+	return	false;
+}

@@ -69,3 +69,7 @@ void Map::Draw()
 void	Map::SetEnemy(Enemy* enemy,int	i) {
 	enemy_[i] = enemy;
 }
+
+void	Map::SetBox(Box* box_, int i) {
+	box[i] = box_;
+}

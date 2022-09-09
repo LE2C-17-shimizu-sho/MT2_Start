@@ -12,6 +12,10 @@ GameScene::~GameScene() {
 		delete	enemy_[i];
 	}
 	delete	map;
+	for (size_t i = 0; i < numB; i++)
+	{
+		delete	box[i];
+	}
 };
 
 void GameScene::Initialize() {
@@ -22,6 +26,10 @@ void GameScene::Initialize() {
 	}
 	map = new	Map();
 	map->Initialize();
+	for (size_t i = 0; i < numB; i++)
+	{
+		box[i] = new	Box();
+	}
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
@@ -50,6 +58,11 @@ void GameScene::Update() {
 				map->SetEnemy(enemy_[i], i);
 			}
 			map->SetPlayer(player);
+			for (size_t i = 0; i < numB; i++)
+			{
+				box[i]->Initialize(boxPos[i][0], boxPos[i][1]);
+				box[i]->SetPlayer(player);
+			}
 		}
 		break;
 
@@ -112,11 +125,15 @@ void	GameScene::Draw() {
 
 		// ÉQÅ[ÉÄ
 	case 2:
-		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		for (size_t i = 0; i < numE; i++)
 		{
 			enemy_[i]->Draw();
+		}
+		for (size_t i = 0; i < numB; i++)
+		{
+			box[i]->Draw();
 		}
 		map->Draw();
 		DrawFormatString(0, 0, color, "ÉQÅ[ÉÄ");
@@ -142,6 +159,8 @@ void	GameScene::CheckAll() {
 	float	x2_;
 	float	y2_;
 	float	r2_;
+	float	w_;
+	float	h_;
 	for (size_t i = 0; i < numE; i++)
 	{
 		if (player->flag && enemy_[i]->flag)
@@ -167,6 +186,37 @@ void	GameScene::CheckAll() {
 				{
 					player->OnCollision();
 				}
+
+			}
+		}
+	}
+	for (size_t i = 0; i < numB; i++)
+	{
+		if (player->flag)
+		{
+			//î†Ç∆ãzÇ¢çûÇﬁîÕàÕÇÃìñÇΩÇËîªíË
+			{
+				r1_ = player->range;
+				x2_ = box[i]->posX;
+				y2_ = box[i]->posY;
+				w_ = box[i]->width;
+				h_ = box[i]->higth;
+				if (CheckCircleDot4(x1_, y1_, r1_, x2_, y2_,w_,h_))
+				{
+					DrawFormatString(0, 180, GetColor(255, 255, 255), "hit");
+				}
+				
+			}
+			//ìGÇ∆é©ã@ÇÃìñÇΩÇËîªíË
+			{
+				//r1_ = player->r;
+				//x2_ = box[i]->posX;
+				//y2_ = box[i]->posY;
+				//r2_ = box[i]->r;
+				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				//{
+				//	player->OnCollision();
+				//}
 
 			}
 		}

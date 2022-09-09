@@ -1,5 +1,6 @@
 #pragma once
 #include<math.h>
+#include"DxLib.h"
 
 //‹éŒ`
 float	CheckBox(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2);
@@ -19,3 +20,9 @@ bool	CheckSide4(float x1, float y1, float r, float x2, float y2, float w2, float
 
 //‰~
 float	CheckCircle(float x1, float y1, float r1, float x2, float y2, float r2);
+
+//“_‚Æ‰~
+bool	CheckCircleDot(float	x1, float	y1, float	r, float	x2, float	y2);
+
+//4“_‚Æ‰~
+bool	CheckCircleDot4(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h);
