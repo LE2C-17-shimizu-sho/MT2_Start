@@ -125,7 +125,7 @@ void	GameScene::Draw() {
 
 		// ƒQ[ƒ€
 	case 2:
-		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		for (size_t i = 0; i < numE; i++)
 		{
