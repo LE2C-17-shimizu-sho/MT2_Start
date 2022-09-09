@@ -48,6 +48,22 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			posX += move;
 			scrollX += move;
 		}
+		if (posX<340)
+		{
+			posX = 320 + r;
+		}
+		if (posY < 160)
+		{
+			posY = 140 + r;
+		}
+		if (posX > 5412)
+		{
+			posX = 5432 - r;
+		}
+		if (posY >	2976)
+		{
+			posY = 2996- r;
+		}
 
 		//ÉXÉNÉçÅ[Éãèàóù
 			//--ç≈è¨--//
@@ -93,8 +109,8 @@ void	Player::Draw() {
 		DrawRectGraph(posX - r - scrollX, posY - r - scrollY, num * (r * 2), 0, 40, 40, handle, TRUE, FALSE);
 		DrawCircle(posX - scrollX, posY - scrollY, range, GetColor(255, 255, 255), false);
 	}
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", scrollX);
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f", scrollY);
+	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
+	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f",posY);
 	DrawFormatString(0, 120, GetColor(255, 255, 255), "%d", num);
 }
 

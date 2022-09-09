@@ -34,11 +34,12 @@ private:
 	char oldkeys[256] = { 0 };
 	int scene = 0;
 	Player* player;
-	Enemy* enemy[numE];
+	Enemy* enemy_[numE];
 	Map* map;
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
-		{650, 1420},
+		//{650, 1420},
+		{620, 1420},
 		{512,2816},
 		{1664,17992},
 		{2496,1856},

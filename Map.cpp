@@ -32,9 +32,12 @@ void Map::Update()
 				}
 				//“G‚Ì‚ ‚½‚è”»’è
 				{
-					if (CheckBoxCircle(enemy->posX, enemy->posY, enemy->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+					for (size_t k = 0; k < 14; k++)
 					{
-						enemy->DeathCollision();
+						if (CheckBoxCircle(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						{
+							enemy_[k]->DeathCollision();
+						}
 					}
 				}
 				
@@ -61,4 +64,8 @@ void Map::Draw()
 			}
 		}
 	}
+}
+
+void	Map::SetEnemy(Enemy* enemy,int	i) {
+	enemy_[i] = enemy;
 }

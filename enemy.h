@@ -36,10 +36,9 @@ public:
 	float	posY;
 	float	r = 40.0f;
 	bool	flag;
+	bool	rFlag;
 private:
 	float	move = 3.4f;
-	
-	
 
 	Player* player = nullptr;
 };
