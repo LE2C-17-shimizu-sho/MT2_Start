@@ -136,6 +136,7 @@
     <ClCompile Include="box.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="gamescene.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="hit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="box.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="gamescene.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="hit.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Matrix4.h" />
