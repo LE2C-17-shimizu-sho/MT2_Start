@@ -109,19 +109,19 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		}
 		if (key[KEY_INPUT_S] == 1)
 		{
-			angle = 3;
+			angle = 3.1;
 		}
 		if (key[KEY_INPUT_A] == 1 )
 		{
-			angle = 5;
+			angle = 4.7;
 		}
 		if ( key[KEY_INPUT_D] == 1)
 		{
-			angle = 2;
+			angle = 1.6;
 		}
 		if (key[KEY_INPUT_W] == 1 && key[KEY_INPUT_A] == 1)
 		{
-			angle = 6;
+			angle = 5.8;
 		}
 		if (key[KEY_INPUT_W] == 1 && key[KEY_INPUT_D] == 1)
 		{
