@@ -1,5 +1,7 @@
 #pragma once
 #include"DxLib.h"
+#include<math.h>
+#define	PI 3.14f
 
 class Player
 {
@@ -28,7 +30,7 @@ public:
 	float	y_;
 	float	oldX;
 	float	oldY;
-	const	float	r = 30.0f;;
+	const	float	r = 20.0f;;
 	const	float	range = 145.0f;
 	float	scrollX;
 	float	scrollY;
@@ -37,12 +39,15 @@ public:
 	bool	flag;
 
 private:
-	int	handle;
+	int	handle[6];
 	int	lightHandle;
 	float	posX;
 	float	posY;
 	float	move;
+	float	xd;
+	float	yd;
 	const	int	time = 30;
+	float	angle;
 	int	timer;
 	int	num;
 };

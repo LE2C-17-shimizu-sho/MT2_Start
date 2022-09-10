@@ -1,13 +1,13 @@
 #include"player.h"
 
 void	Player::State() {
-	posX = 524.0f;
-	posY = 320.0f;
+	posX = 504.0f;
+	posY = 300.0f;
 	scrollX, scrollY = 0;
 	flag = true;
 	x_ = 0.0f;
 	y_ = 0.0f;
-	handle = LoadGraph("./Resources/Player.png");
+	LoadDivGraph("./Resources/Player.png",6,6,1,40,40,handle);
 	lightHandle = LoadGraph("./Resources/light.png");
 }
 
@@ -27,6 +27,7 @@ void	Player::Update(char	key[], char	oldkey[]) {
 				move = 2.0f;
 			}
 		}
+
 
 		//ˆÚ“®ˆ—
 		if (key[KEY_INPUT_W] == 1)
@@ -49,6 +50,8 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			posX += move;
 			scrollX += move;
 		}
+
+		//ˆÚ“®”ÍˆÍ
 		if (posX<340)
 		{
 			posX = 320 + r;
@@ -99,7 +102,39 @@ void	Player::Update(char	key[], char	oldkey[]) {
 				num = 0;
 			}
 		}
-
+		
+		if (key[KEY_INPUT_W] == 1 )
+		{
+			angle = 0;
+		}
+		if (key[KEY_INPUT_S] == 1)
+		{
+			angle = 3;
+		}
+		if (key[KEY_INPUT_A] == 1 )
+		{
+			angle = 5;
+		}
+		if ( key[KEY_INPUT_D] == 1)
+		{
+			angle = 2;
+		}
+		if (key[KEY_INPUT_W] == 1 && key[KEY_INPUT_A] == 1)
+		{
+			angle = 6;
+		}
+		if (key[KEY_INPUT_W] == 1 && key[KEY_INPUT_D] == 1)
+		{
+			angle = 1;
+		}
+		if ( key[KEY_INPUT_S] == 1&&key[KEY_INPUT_A] == 1)
+		{
+			angle = 4;
+		}
+		if ( key[KEY_INPUT_S] == 1&& key[KEY_INPUT_D] == 1)
+		{
+			angle = 2.5;
+		}
 	}
 }
 
@@ -107,10 +142,11 @@ void	Player::Draw() {
 	if (flag)
 	{
 		DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
-		//DrawRectGraph(posX - r - scrollX, posY - r - scrollY, num * (r * 2), 0, 40, 40, handle, TRUE, FALSE);
-		DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
-		DrawCircle(posX - scrollX, posY - scrollY, range, GetColor(255, 255, 255), false);
+		//DrawGraph(posX - r - scrollX, posY - r - scrollY, handle[num], TRUE);
+		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle[num], true, false);
+		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(255, 255, 255), false);
 	}
+	DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f",posY);
 	DrawFormatString(0, 120, GetColor(255, 255, 255), "%d", num);
