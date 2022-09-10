@@ -37,7 +37,7 @@ public:
 private:
 	Player* player;
 	int	handle;
-	const	int	time = 30;
+	const	int	time = 20;
 	int	timer;
 	int	num;
 };
