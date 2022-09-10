@@ -16,6 +16,7 @@ GameScene::~GameScene() {
 	{
 		delete	box[i];
 	}
+	delete	goal;
 };
 
 void GameScene::Initialize() {
@@ -30,6 +31,9 @@ void GameScene::Initialize() {
 	{
 		box[i] = new	Box();
 	}
+
+	goal = new	Goal;
+	goal->Initialize();
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
@@ -64,6 +68,8 @@ void GameScene::Update() {
 				box[i]->SetPlayer(player);
 				map->SetBox(box[i], i);
 			}
+			goal->State();
+			goal->SetPlayer(player);
 		}
 		break;
 
@@ -88,6 +94,16 @@ void GameScene::Update() {
 		
 		map->Update();
 
+		goal->Update();
+
+		if (goal->flag)
+		{
+			scene = 3;
+		}
+		if (!player->flag)
+		{
+			scene = 4;
+		}
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 3;
@@ -130,7 +146,7 @@ void	GameScene::Draw() {
 		// ƒQ[ƒ€
 	case 2:
 		map->Draw();
-		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
 		for (size_t i = 0; i < numE; i++)
 		{
@@ -140,6 +156,7 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
+		goal->Draw();
 		DrawFormatString(0, 0, color, "ƒQ[ƒ€");
 		break;
 
@@ -205,7 +222,7 @@ void	GameScene::CheckAll() {
 				y2_ = box[i]->posY;
 				w_ = box[i]->width;
 				h_ = box[i]->higth;
-				if (CheckCircleDot4(x1_, y1_, r1_, x2_, y2_,w_,h_))
+				if (CheckCircleDotL(x1_, y1_, r1_, x2_, y2_,w_,h_))
 				{
 					box[i]->HomingCollision();
 					DrawFormatString(200, 200, GetColor(255, 255, 255), "3");
@@ -219,20 +236,33 @@ void	GameScene::CheckAll() {
 				y2_ = box[i]->posY;
 				w_ = box[i]->width;
 				h_ = box[i]->higth;
-				if (CheckCircleDot4(x1_, y1_, r1_, x2_, y2_, w_, h_))
+				if (CheckSide1(x1_, y1_, r1_, x2_,y2_,w_,h_) &&
+					CheckSide3(x1_, y1_, r1_, x2_, y2_, w_, h_))
 				{
-					
-				}
-				if (CheckBoxCircle(x1_, y1_, r1_, x2_, y2_, w_, h_))
-				{
-					box[i]->OnCollisionX();
-					box[i]->OnCollisionY();
 					player->MapCollisionX();
-					player->MapCollisionY();
+					box[i]->OnCollisionX();
 
 				}
-
+				if (CheckSide2(x1_, y1_, r1_, x2_, y2_, w_, h_) &&
+					CheckSide4(x1_, y1_, r1_, x2_, y2_, w_, h_))
+				{
+					player->MapCollisionY();
+					box[i]->OnCollisionY();
+				}
 			}
+		}
+	}
+	{
+		r1_ = player->r;
+		r2_ = 95;
+		x2_ = goal->posX + 95;
+		y2_ = goal->posY + 288;
+		w_ =  goal->w;
+		h_ =  goal->h;
+
+		if (CheckCircle(x1_,y1_,r1_,x2_,y2_,r2_))
+		{
+			goal->flag = true;
 		}
 	}
 }

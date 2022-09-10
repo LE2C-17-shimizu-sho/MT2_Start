@@ -45,19 +45,13 @@ void Map::Update()
 				{
 					for (size_t i = 0; i < 2; i++)
 					{
-
-						if (CheckSide1(box[i]->posX, box[i]->posY, (box[i]->higth/2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
-							CheckSide3(box[i]->posX, box[i]->posY, (box[i]->higth / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						if (CheckBox(box[i]->posX, box[i]->posY, box[i]->width, box[i]->higth, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 						{
-							DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
 							box[i]->OnCollisionX();
 
-						}
-						if (CheckSide2(box[i]->posX, box[i]->posY, (box[i]->width / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
-							CheckSide4(box[i]->posX, box[i]->posY, (box[i]->width / 2), MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
-						{
-							DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
 							box[i]->OnCollisionY();
+							DrawFormatString(120, 0, GetColor(255, 255, 255), "3");
+							
 						}
 					}
 				}

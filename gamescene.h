@@ -4,6 +4,7 @@
 #include"hit.h"
 #include"Map.h"
 #include"box.h"
+#include"Goal.h"
 
 const	int	numE=14;
 const	int	numB = 2;
@@ -39,6 +40,8 @@ private:
 	Enemy* enemy_[numE];
 	Map* map;
 	Box* box[numB];
+	Goal* goal;
+
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
 		//{650, 1420},
@@ -59,7 +62,7 @@ private:
 	};
 	int	boxPos[numB][2] = {
 		//{650, 1420},
-		{1024, 2688},
-		{2688,512}
+		{1030, 2694},
+		{2688,448}
 	};
 };

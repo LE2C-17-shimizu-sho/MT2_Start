@@ -26,3 +26,5 @@ bool	CheckCircleDot(float	x1, float	y1, float	r, float	x2, float	y2);
 
 //4“_‚Æ‰~
 bool	CheckCircleDot4(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h);
+
+bool	CheckCircleDotL(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h);

@@ -5,7 +5,8 @@ void	Box::Initialize(float	x_, float	y_) {
 	posX = x_;
 	posY = y_;
 	flag = true;
-	rFlag = false;
+	mapFlag = false;
+	moveFlag = false;
 }
 
 void	Box::Update() {
@@ -13,6 +14,17 @@ void	Box::Update() {
 	oldY = posY;
 	x_ = posX - width / 2;
 	y_ = posY - higth / 2;
+	mapFlag = false;
+	if (posX < 320)
+	{
+		posX = 320;
+		mapFlag = true;
+	}
+	if (!moveFlag||mapFlag)
+	{
+		move = 0.0f;
+	}
+	moveFlag = false;
 }
 
 void	Box::Draw() {
@@ -22,12 +34,25 @@ void	Box::Draw() {
 
 void	Box::OnCollisionX() {
 	posX = oldX;
+	mapFlag = true;
 }
 
 void	Box::OnCollisionY() {
 	posY = oldY;
+	mapFlag = true;
 }
 
 void	Box::HomingCollision() {
-	posX -= move;
+	moveFlag = true;
+	if (!mapFlag&&moveFlag)
+	{
+		move += 0.05f;
+		if (move>2.5f)
+		{
+			move = 2.5f;
+		}
+		posX -= move;
+		//OuterProduct(player->x_, posX, player->y_, posY, move);
+	}
+
 }

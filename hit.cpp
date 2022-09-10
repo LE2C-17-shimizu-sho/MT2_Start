@@ -223,9 +223,33 @@ bool	CheckCircleDot(float	x1, float	y1, float	r, float	x2, float	y2) {
 //4点と円
 bool	CheckCircleDot4(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h)
 {
-	if (CheckCircleDot(x1, y1, r, x2, y2)) { return	true; };
-	if (CheckCircleDot(x1, y1, r, x2, y2 + h)) { return	true; };
-	if (CheckCircleDot(x1, y1, r, x2 + w, y2)) { return	true; };
-	if (CheckCircleDot(x1, y1, r, x2 + w, y2 + h)) { return	true; };
+	if (CheckCircleDot(x1, y1, r, x2, y2)) { return	true; };		//右上
+	if (CheckCircleDot(x1, y1, r, x2, y2 + h)) { return	true; };	//右下
+	if (CheckCircleDot(x1, y1, r, x2 + w, y2)) { return	true; };	//左上
+	if (CheckCircleDot(x1, y1, r, x2 + w, y2 + h)) { return	true; };//左下
+	if (CheckCircleDot(x1, y1, r, x2 + (w / 2), y2)) { return	true; };//上辺真ん中
+	if (CheckCircleDot(x1, y1, r, x2, y2 + (h / 2))) { return	true; };//左辺真ん中
+	if (CheckCircleDot(x1, y1, r, x2 + (w / 2), y2 + h)) { return	true; };//下辺真ん中
+	if (CheckCircleDot(x1, y1, r, x2 + w, y2 + (h / 2))) { return	true; };//右辺真ん中
+
+	return	false;
+}
+
+bool	CheckCircleDotL(float	x1, float	y1, float	r, float	x2, float	y2, float	w, float	h)
+{
+	
+	if (CheckCircleDot(x1, y1, r, x2 , y2)&&			//左上
+		CheckCircleDot(x1, y1, r, x2, y2 + (h * 0.25)) )//左下のちょい上
+	{ return	true; };	
+	if (CheckCircleDot(x1, y1, r, x2 , y2 + h)&&		  //左下
+		 CheckCircleDot(x1, y1, r, x2, y2 + (h * 0.75))) //左上のちょい下
+	{ return	true; };
+
+	if (CheckCircleDot(x1, y1, r, x2, y2 + (h * 0.25)) &&	//左下のちょい上
+		CheckCircleDot(x1, y1, r, x2, y2 + (h * 0.75)))		//左上のちょい下
+	{
+		return	true;
+	};
+
 	return	false;
 }

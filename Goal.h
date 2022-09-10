@@ -1,15 +1,16 @@
 #pragma once
 #include"DxLib.h"
 #include"player.h"
-#include"product.h"
 
-class Box
+class Player;
+
+class Goal
 {
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
-	void	Initialize(float	x_, float	y_);
+	void	Initialize();
 	/// <summary>
 	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
@@ -23,28 +24,21 @@ public:
 	/// </summary>
 	void	Draw();
 
-	void OnCollisionX();
-
-	void OnCollisionY();
-
-	void HomingCollision();
-	
 	void	SetPlayer(Player* player_) { player = player_; };
 
+	void OnCollision();
+
+	const	float	w = 192.0f;
+	const	float	h = 384.0f;
+	bool	flag;
 	float	posX;
 	float	posY;
-	float	width = 240;
-	float	higth = 240;
-	bool	flag;
-	bool	mapFlag;
-	bool	moveFlag;
-private:
-	float	move;
-	float	oldX;
-	float	oldY;
-	float   x_;
-	float	y_;
 
+private:
 	Player* player;
+	int	handle;
+	const	int	time = 30;
+	int	timer;
+	int	num;
 };
 
