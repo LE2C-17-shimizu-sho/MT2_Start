@@ -34,6 +34,9 @@ void GameScene::Initialize() {
 
 	goal = new	Goal;
 	goal->Initialize();
+
+	hammer = new	Hammer;
+	hammer->Initialize(620, 1420, 620, 1480);
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
@@ -70,6 +73,7 @@ void GameScene::Update() {
 			}
 			goal->State();
 			goal->SetPlayer(player);
+			hammer->SetPlayer(player);
 		}
 		break;
 
@@ -83,16 +87,20 @@ void GameScene::Update() {
 
 		// ƒQ[ƒ€
 	case 2:
+		map->Update();
 		CheckAll();
 		player->Update(keys, oldkeys);
+		for (size_t i = 0; i < numE; i++)
+		{
+			enemy_[i]->Update();
+		}
 		for (size_t i = 0; i < numB; i++)
 		{
 			box[i]->Update();
 		}
-		
 		//enemy_[0]->Update();
 		
-		map->Update();
+		hammer->Update();
 
 		goal->Update();
 
@@ -145,9 +153,9 @@ void	GameScene::Draw() {
 
 		// ƒQ[ƒ€
 	case 2:
-		map->Draw();
-		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		player->Draw();
+		map->Draw();
+		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		for (size_t i = 0; i < numE; i++)
 		{
 			enemy_[i]->Draw();
@@ -156,6 +164,8 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
+		//hammer->Draw();
+
 		goal->Draw();
 		DrawFormatString(0, 0, color, "ƒQ[ƒ€");
 		break;
@@ -199,14 +209,14 @@ void	GameScene::CheckAll() {
 			}
 			//“G‚ÆŽ©‹@‚Ì“–‚½‚è”»’è
 			{
-				r1_ = player->r;
-				x2_ = enemy_[i]->posX;
-				y2_ = enemy_[i]->posY;
-				r2_ = enemy_[i]->r;
-				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
-				{
-					player->OnCollision();
-				}
+				//r1_ = player->r;
+				//x2_ = enemy_[i]->posX;
+				//y2_ = enemy_[i]->posY;
+				//r2_ = enemy_[i]->r;
+				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				//{
+				//	player->OnCollision();
+				//}
 
 			}
 		}

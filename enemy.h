@@ -30,15 +30,23 @@ public:
 
 	void OnCollision();
 
+	void OnCollisionX();
+	void OnCollisionY();
+	void OnCollisionX2();
+	void OnCollisionY2();
+
 	void	DeathCollision();
 
 	float	posX;
 	float	posY;
 	float	r = 40.0f;
 	bool	flag;
-	bool	rFlag;
+	int	bFlag;
 private:
-	float	move = 3.4f;
+	float	move = 3.0f;
+
+	float	oldX[2];
+	float	oldY[2];
 
 	Player* player = nullptr;
 };

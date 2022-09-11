@@ -5,6 +5,7 @@
 #include"Map.h"
 #include"box.h"
 #include"Goal.h"
+#include"Hammer.h"
 
 const	int	numE=14;
 const	int	numB = 2;
@@ -41,6 +42,7 @@ private:
 	Map* map;
 	Box* box[numB];
 	Goal* goal;
+	Hammer* hammer;
 
 	int	groundHandle;
 	int	enemyPos[numE][2] = {

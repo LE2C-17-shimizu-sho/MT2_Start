@@ -3,7 +3,7 @@
 void Map::Initialize()
 {
 	// ‰æ‘œ‚ğ‰Šú‰»
-	//block = LoadGraph("./Resources/block.png");
+	block = LoadGraph("./Resources/block.png");
 }
 
 void Map::Update()
@@ -21,23 +21,13 @@ void Map::Update()
 					{
 						DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
 						player->MapCollisionX();
-
+					
 					}
 					if (CheckSide2(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
 						CheckSide4(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 					{
 						DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
 						player->MapCollisionY();
-					}
-				}
-				//“G‚Ì‚ ‚½‚è”»’è
-				{
-					for (size_t k = 0; k < 14; k++)
-					{
-						if (CheckCircleDot4(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
-						{
-							enemy_[k]->DeathCollision();
-						}
 					}
 				}
 
@@ -55,12 +45,34 @@ void Map::Update()
 						}
 					}
 				}
+			}
+			//“G‚Ì‚ ‚½‚è”»’è
+			{
+				for (size_t k = 0; k < 14; k++)
+				{
+					if (map[y][x] != 0)
+					{
+
+						if (CheckSideE1(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) ||
+							CheckSideE3(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						{
+							enemy_[k]->OnCollisionX();
+							DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
+						}
+						if (CheckSideE2(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) ||
+							CheckSideE4(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						{
+							DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
+							enemy_[k]->OnCollisionY();
+						}
+					}
+				}
+			}
 				
 				//if (CheckSide1(player->x_,player->y_,player->r, MAPCHIP_WIDTH*x, MAPCHIP_HEIGHT*y,  MAPCHIP_WIDTH , MAPCHIP_HEIGHT))
 				//{
 				//	player->MapCollisionX();
 				//}
-			}
 		}
 	}
 }
@@ -68,7 +80,7 @@ void Map::Update()
 void Map::Draw()
 {
 	// •`‰æˆ—
-	/*for (int y = 0; y < 49; y++)
+	for (int y = 0; y < 49; y++)
 	{
 		for (int x = 0; x < 90; x++)
 		{
@@ -77,7 +89,7 @@ void Map::Draw()
 				DrawGraph((x * BLOCK_SIZE)-player->scrollX, (y * BLOCK_SIZE) - player->scrollY, block, true);
 			}
 		}
-	}*/
+	}
 }
 
 void	Map::SetEnemy(Enemy* enemy,int	i) {

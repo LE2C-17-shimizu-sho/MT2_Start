@@ -6,11 +6,15 @@ void	Enemy::Initialize(float	x_,float	y_) {
 	posX = x_;
 	posY = y_;
 	flag = true;
-	rFlag = false;
 }
 
 void	Enemy::Update() {
-	
+
+	oldX[1] = oldX[0];
+	oldY[1] = oldY[0];
+	oldX[0] = posX;
+	oldY[0] = posY;
+	bFlag = 0;
 }
 
 void	Enemy::Draw() {
@@ -22,11 +26,18 @@ void	Enemy::Draw() {
 }
 
 void	Enemy::OnCollision() {
-	if (flag)
-	{
-		rFlag = false;
-		OuterProduct(player->x_, posX, player->y_, posY, move);
-	}
+	
+	OuterProduct(player->x_, posX, player->y_, posY, move,bFlag);
+	
+}
+
+void	Enemy::OnCollisionX() {
+	posX = oldX[1];
+	bFlag = 1;
+}
+void	Enemy::OnCollisionY() {
+	posY = oldY[1];
+	bFlag = 2;
 }
 
 void	Enemy::DeathCollision() {
