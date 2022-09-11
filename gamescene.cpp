@@ -153,9 +153,8 @@ void	GameScene::Draw() {
 
 		// ÉQÅ[ÉÄ
 	case 2:
-		player->Draw();
 		map->Draw();
-		//DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		for (size_t i = 0; i < numE; i++)
 		{
 			enemy_[i]->Draw();
@@ -167,6 +166,7 @@ void	GameScene::Draw() {
 		//hammer->Draw();
 
 		goal->Draw();
+		player->Draw();
 		DrawFormatString(0, 0, color, "ÉQÅ[ÉÄ");
 		break;
 

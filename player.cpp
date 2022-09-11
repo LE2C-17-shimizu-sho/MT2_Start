@@ -148,7 +148,7 @@ void	Player::Draw() {
 		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(255, 255, 255), false);
 		DrawCircle(posX - scrollX, posY - scrollY, range2, GetColor(255, 255, 255), false);
 	}
-	//DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
+	DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f",posY);
 	DrawFormatString(0, 120, GetColor(255, 255, 255), "%d", num);
