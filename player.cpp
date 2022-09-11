@@ -54,19 +54,19 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		//移動範囲
 		if (posX<340)
 		{
-			posX = 320 + r;
+			posX = 310 + r;
 		}
 		if (posY < 160)
 		{
-			posY = 140 + r;
+			posY = 130 + r;
 		}
 		if (posX > 5412)
 		{
-			posX = 5432 - r;
+			posX = 5442 - r;
 		}
 		if (posY >	2976)
 		{
-			posY = 2996- r;
+			posY = 3006- r;
 		}
 
 		//スクロール処理
@@ -103,6 +103,7 @@ void	Player::Update(char	key[], char	oldkey[]) {
 			}
 		}
 		
+		//角度調整
 		if (key[KEY_INPUT_W] == 1 )
 		{
 			angle = 0;
