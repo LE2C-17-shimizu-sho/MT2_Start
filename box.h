@@ -3,6 +3,8 @@
 #include"player.h"
 #include"product.h"
 
+class Player;
+
 class Box
 {
 public:
