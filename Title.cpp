@@ -1,15 +1,50 @@
 #include "Title.h"
 
-void Title::Initialize()
+void Title::Initialize(float x, float y)
 {
-	title = LoadGraph("./Resources/title.png");
+	posX = x;
+	posY = y;
+
+	titleFlag = false;
+
+	titleTex = LoadGraph("./Resources/title.png");
+	titleFont = LoadGraph("./Resources/titleFont.png");
 }
 
-void Title::Update()
+void Title::Update(int scene)
 {
+	if (scene == 0)
+	{
+		titleFlag = true;
+		if (titleFlag == true)
+		{
+			blendNum-= 2.0f;
+		}
+		if (blendNum <= 0.0f)
+		{
+			blendNum = 0.0f;
+		}
+
+	}
+	else
+	{
+		titleFlag == false;
+	}
 }
 
 void Title::Draw()
 {
-	DrawGraph(0, 0, title, true);
+	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(0, 0, 255), true);
+	//DrawGraph(posX, posY, titleTex, true);
+	DrawGraph(posX + 420, posY + 290, titleFont, true);
+
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, blendNum);
+	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(0, 0, 0), true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, blendNum);
+}
+
+void Title::Reset()
+{
+	blendNum = 255.0f;
+	titleFlag = false;
 }
