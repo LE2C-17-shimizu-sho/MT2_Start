@@ -16,8 +16,8 @@ void Particle::Initialize()
 	alphaSpeed = 20;
 
 	// ‚±‚ê‚à‚»‚Ì‚Ü‚Ü Resources‚Ý‚½‚¢‚È‚â‚Â–Y‚ê‚È‚¢‚æ‚¤‚É
-	efect = LoadGraph("enemyEffect.png");
-	efect2 = LoadGraph("enemyEffect2.png");
+	efect = LoadGraph("./Resources/enemyEffect.png");
+	efect2 = LoadGraph("./Resources/enemyEffect2.png");
 
 	// ‚±‚ê‚à‚»‚Ì‚Ü‚Ü
 	flag = false;
