@@ -96,8 +96,11 @@ void GameScene::Update() {
 		// ゲーム
 	case 3:
 		#pragma	region	アップデート
+		for (size_t i = 0; i < numE; i++)
+		{
+			enemy_[i]->markFlag = 0;
+		}
 		map->Update();
-		CheckAll();
 		player->Update(keys, oldkeys);
 		for (size_t i = 0; i < numE; i++)
 		{
@@ -112,6 +115,7 @@ void GameScene::Update() {
 		hammer->Update();
 
 		goal->Update();
+		CheckAll();
 		#pragma	endregion
 
 		if (goal->flag)//クリア
@@ -180,6 +184,7 @@ void	GameScene::Draw() {
 		goal->Draw();
 		player->Draw();
 		DrawFormatString(0, 0, color, "ゲーム");
+		DrawFormatString(0, 10, color, "%d",enemy_[0]->markFlag);
 		break;
 
 		// リザルト(クリア)

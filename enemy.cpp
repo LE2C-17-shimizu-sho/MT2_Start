@@ -21,7 +21,7 @@ void	Enemy::Update() {
 	oldX[0] = posX;
 	oldY[0] = posY;
 	bFlag = 0;
-	markFlag == 0;
+	//markFlag == 0;
 	if (timer-- <= 0)
 	{
 		num++;
