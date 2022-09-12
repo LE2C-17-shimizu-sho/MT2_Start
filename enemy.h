@@ -12,11 +12,11 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void	Initialize(float	x_, float	y_);
+	void	Initialize();
 	/// <summary>
 	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
-	void	State();
+	void	State(float	x_, float	y_);
 	/// <summary>
 	/// XV
 	/// </summary>
@@ -39,16 +39,26 @@ public:
 
 	void	DeathCollision();
 
+	void markCollision();
+
+
 	float	posX;
 	float	posY;
 	float	r = 40.0f;
 	bool	flag;
 	int	bFlag;
+	int	markFlag;
 private:
+	int	handle[4];
+	int	hatenaHandle;
+	int	bikkuriHandle;
 	float	move = 3.0f;
 
 	float	oldX[2];
 	float	oldY[2];
+	const	int	time = 15;
+	int	timer;
+	int	num;
 
 	Player* player = nullptr;
 };

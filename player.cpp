@@ -7,7 +7,7 @@ void	Player::State() {
 	flag = true;
 	x_ = 0.0f;
 	y_ = 0.0f;
-	LoadDivGraph("./Resources/Player.png",6,6,1,40,40,handle);
+	handle=LoadGraph("./Resources/Player.png");
 	lightHandle = LoadGraph("./Resources/light.png");
 }
 
@@ -144,11 +144,11 @@ void	Player::Draw() {
 	{
 		DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
 		//DrawGraph(posX - r - scrollX, posY - r - scrollY, handle[num], TRUE);
-		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle[num], true, false);
+		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle, true, false);
 		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(255, 255, 255), false);
 		DrawCircle(posX - scrollX, posY - scrollY, range2, GetColor(255, 255, 255), false);
 	}
-	//DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
+	DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
 	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f",posY);
 }

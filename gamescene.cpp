@@ -24,12 +24,14 @@ void GameScene::Initialize() {
 	for (size_t i = 0; i < numE; i++)
 	{
 		enemy_[i] = new	Enemy();
+		enemy_[i]->Initialize();
 	}
 	map = new	Map();
 	map->Initialize();
 	for (size_t i = 0; i < numB; i++)
 	{
 		box[i] = new	Box();
+		box[i]->Initialize();
 	}
 
 	goal = new	Goal;
@@ -60,14 +62,14 @@ void GameScene::Update() {
 			player->State();
 			for (size_t i = 0; i < numE; i++)
 			{
-				enemy_[i]->Initialize(enemyPos[i][0], enemyPos[i][1]);
+				enemy_[i]->State(enemyPos[i][0], enemyPos[i][1]);
 				enemy_[i]->SetPlayer(player);
 				map->SetEnemy(enemy_[i], i);
 			}
 			map->SetPlayer(player);
 			for (size_t i = 0; i < numB; i++)
 			{
-				box[i]->Initialize(boxPos[i][0], boxPos[i][1]);
+				box[i]->State(boxPos[i][0], boxPos[i][1]);
 				box[i]->SetPlayer(player);
 				map->SetBox(box[i], i);
 			}
@@ -84,9 +86,16 @@ void GameScene::Update() {
 			scene = 2;
 		}
 		break;
+	case 2:
+		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		{
+			scene = 3;
+		}
+		break;
 
 		// ゲーム
-	case 2:
+	case 3:
+		#pragma	region	アップデート
 		map->Update();
 		CheckAll();
 		player->Update(keys, oldkeys);
@@ -103,23 +112,24 @@ void GameScene::Update() {
 		hammer->Update();
 
 		goal->Update();
+		#pragma	endregion
 
-		if (goal->flag)
-		{
-			scene = 3;
-		}
-		if (!player->flag)
+		if (goal->flag)//クリア
 		{
 			scene = 4;
 		}
+		if (!player->flag)//オーバー
+		{
+			scene = 5;
+		}
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
-			scene = 3;
+			scene = 4;
 		}
 		break;
 
 		// リザルト(クリア)
-	case 3:
+	case 4:
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 0;
@@ -127,7 +137,7 @@ void GameScene::Update() {
 		break;
 
 		// リザルト(ゲームオーバー)
-	case 4:
+	case 5:
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 0;
@@ -145,14 +155,16 @@ void	GameScene::Draw() {
 		DrawFormatString(0, 0, color, "タイトル");
 
 		break;
-
-		// 操作説明
 	case 1:
+		DrawFormatString(0, 0, color, "ストーリー");
+		break;
+		// 操作説明
+	case 2:
 		DrawFormatString(0, 0, color, " 操作説明");
 		break;
 
 		// ゲーム
-	case 2:
+	case 3:
 		map->Draw();
 		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		for (size_t i = 0; i < numE; i++)
@@ -171,13 +183,27 @@ void	GameScene::Draw() {
 		break;
 
 		// リザルト(クリア)
-	case 3:
+	case 4:
 		DrawFormatString(0, 0, color, "クリア");
 		break;
 
 		// リザルト(ゲームオーバー)
-	case 4:
+	case 5:
 		DrawFormatString(0, 0, color, "オーバー");
+		map->Draw();
+		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		for (size_t i = 0; i < numE; i++)
+		{
+			enemy_[i]->Draw();
+		}
+		for (size_t i = 0; i < numB; i++)
+		{
+			box[i]->Draw();
+		}
+		hammer->Draw();
+
+		goal->Draw();
+		player->Draw();
 		break;
 	}
 	DrawFormatString(0, 30, color, "scene = %d", scene);
@@ -196,6 +222,17 @@ void	GameScene::CheckAll() {
 	{
 		if (player->flag && enemy_[i]->flag)
 		{
+			//敵と?を出す範囲の当たり判定
+			{
+				r1_ = player->range2;
+				x2_ = enemy_[i]->posX;
+				y2_ = enemy_[i]->posY;
+				r2_ = enemy_[i]->r;
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					enemy_[i]->markCollision();
+				}
+			}
 			//敵と吸い込む範囲の当たり判定
 			{
 				r1_ = player->range;

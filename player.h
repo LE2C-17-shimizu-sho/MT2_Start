@@ -40,7 +40,7 @@ public:
 	bool	flag;
 
 private:
-	int	handle[6];
+	int	handle;
 	int	lightHandle;
 	float	posX;
 	float	posY;

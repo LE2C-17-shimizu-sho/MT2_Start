@@ -9,11 +9,11 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void	Initialize(float	x_, float	y_);
+	void	Initialize();
 	/// <summary>
 	/// ƒQ[ƒ€“à‚Ì‰Šú‰»
 	/// </summary>
-	void	State();
+	void	State(float	x_, float	y_);
 	/// <summary>
 	/// XV
 	/// </summary>
@@ -39,6 +39,7 @@ public:
 	bool	mapFlag;
 	bool	moveFlag;
 private:
+	int	handle;
 	float	move;
 	float	oldX;
 	float	oldY;
