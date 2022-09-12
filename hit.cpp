@@ -192,8 +192,8 @@ bool	CheckSide4(float x1, float y1, float r, float x2, float y2, float w2, float
 	return	1;
 }
 
-bool	CheckSideE1(float x1, float y1, float r, float x2, float y2, float w2, float	h2) {
-	float	cl1 = x1 - r - 4;
+bool	CheckSideE1(float x1, float y1, float r, float x2, float y2, float w2, float	h2, float	num) {
+	float	cl1 = x1 - r - num;
 	float	cr1 = x1 - r;
 	float	cl2 = x2 + w2;
 	float	cr2 = x2 + w2;
@@ -225,7 +225,7 @@ bool	CheckSideE1(float x1, float y1, float r, float x2, float y2, float w2, floa
 
 	return	1;
 }
-bool	CheckSideE2(float x1, float y1, float r, float x2, float y2, float w2, float h2) {
+bool	CheckSideE2(float x1, float y1, float r, float x2, float y2, float w2, float h2,float	num) {
 	float	cl1 = x1 - r;
 	float	cr1 = x1 + r;
 	float	cl2 = x2 ;
@@ -241,7 +241,7 @@ bool	CheckSideE2(float x1, float y1, float r, float x2, float y2, float w2, floa
 		return	0;
 	}
 
-	float	cu1 = y1 - r - 4;
+	float	cu1 = y1 - r - num;
 	float	cd1 = y1 - r;
 	float	cu2 = y2 + h2;
 	float	cd2 = y2 + h2;
@@ -259,9 +259,9 @@ bool	CheckSideE2(float x1, float y1, float r, float x2, float y2, float w2, floa
 
 	return	1;
 }
-bool	CheckSideE3(float x1, float y1, float r, float x2, float y2, float w2, float h2) {
+bool	CheckSideE3(float x1, float y1, float r, float x2, float y2, float w2, float h2,float	num) {
 	float	cl1 = x1 + r;
-	float	cr1 = x1 + r + 4;
+	float	cr1 = x1 + r + num;
 	float	cl2 = x2 ;
 	float	cr2 = x2 ;
 	if (cr1 < cl2)
@@ -292,7 +292,7 @@ bool	CheckSideE3(float x1, float y1, float r, float x2, float y2, float w2, floa
 
 	return	1;
 }
-bool	CheckSideE4(float x1, float y1, float r, float x2, float y2, float w2, float h2) {
+bool	CheckSideE4(float x1, float y1, float r, float x2, float y2, float w2, float h2,float	num) {
 	float cl1 = x1 - r;
 	float	cr1 = x1 + r;
 	float cl2 = x2;
@@ -308,7 +308,7 @@ bool	CheckSideE4(float x1, float y1, float r, float x2, float y2, float w2, floa
 		return	0;
 	}
 	float	cu1 = y1 + r;
-	float	cd1 = y1 + r+4;
+	float	cd1 = y1 + r+num;
 	float	cu2 = y2 ;
 	float	cd2 = y2 ;
 
@@ -324,8 +324,6 @@ bool	CheckSideE4(float x1, float y1, float r, float x2, float y2, float w2, floa
 
 	return	1;
 }
-
-
 
 //‰~
 float	CheckCircle(float x1, float y1, float r1, float x2, float y2, float r2) {

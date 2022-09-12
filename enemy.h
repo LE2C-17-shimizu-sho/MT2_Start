@@ -35,6 +35,8 @@ public:
 	void OnCollisionX2();
 	void OnCollisionY2();
 
+	void OnCollisionXY();
+
 	void	DeathCollision();
 
 	float	posX;

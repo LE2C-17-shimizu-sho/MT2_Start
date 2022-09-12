@@ -36,7 +36,7 @@ void GameScene::Initialize() {
 	goal->Initialize();
 
 	hammer = new	Hammer;
-	hammer->Initialize(620, 1420, 620, 1480);
+	hammer->Initialize( 520, 380);
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
@@ -163,7 +163,7 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
-		//hammer->Draw();
+		hammer->Draw();
 
 		goal->Draw();
 		player->Draw();
@@ -209,14 +209,14 @@ void	GameScene::CheckAll() {
 			}
 			//敵と自機の当たり判定
 			{
-				//r1_ = player->r;
-				//x2_ = enemy_[i]->posX;
-				//y2_ = enemy_[i]->posY;
-				//r2_ = enemy_[i]->r;
-				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
-				//{
-				//	player->OnCollision();
-				//}
+				r1_ = player->r;
+				x2_ = enemy_[i]->posX;
+				y2_ = enemy_[i]->posY;
+				r2_ = enemy_[i]->r;
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					player->OnCollision();
+				}
 
 			}
 		}
@@ -261,7 +261,23 @@ void	GameScene::CheckAll() {
 				}
 			}
 		}
+		for (size_t j = 0; j < numE; j++)
+		{
+			r1_ = enemy_[j]->r;
+			x2_ = box[i]->posX;
+			y2_ = box[i]->posY;
+			w_ = box[i]->width;
+			h_ = box[i]->higth;
+			if (CheckBoxCircle(enemy_[j]->posX, enemy_[j]->posY,r1_,x2_,y2_,w_,h_))
+			{
+				enemy_[j]->OnCollisionXY();
+				box[i]->OnCollisionX();
+				box[i]->OnCollisionY();
+			}
+
+		}
 	}
+	//ゴールとプレイヤー
 	{
 		r1_ = player->r;
 		r2_ = 95;

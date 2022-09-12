@@ -45,26 +45,28 @@ void Map::Update()
 						}
 					}
 				}
-			}
-			//“G‚Ì‚ ‚½‚è”»’è
-			{
-				for (size_t k = 0; k < 14; k++)
+			
+				//“G‚Ì‚ ‚½‚è”»’è
 				{
-					if (map[y][x] != 0)
+					for (size_t k = 0; k < 14; k++)
 					{
-
-						if (CheckSideE1(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) ||
-							CheckSideE3(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						if (CheckSideE1(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT,4))
 						{
 							enemy_[k]->OnCollisionX();
-							DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
 						}
-						if (CheckSideE2(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) ||
-							CheckSideE4(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
+						if (CheckSideE2(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT,4))
 						{
-							DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
 							enemy_[k]->OnCollisionY();
 						}
+						if (CheckSideE3(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT,4))
+						{
+							enemy_[k]->OnCollisionX2();
+						}
+						if (CheckSideE4(enemy_[k]->posX, enemy_[k]->posY, enemy_[k]->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT,4))
+						{
+							enemy_[k]->OnCollisionY2();
+						}
+
 					}
 				}
 			}

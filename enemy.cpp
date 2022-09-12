@@ -32,14 +32,27 @@ void	Enemy::OnCollision() {
 }
 
 void	Enemy::OnCollisionX() {
-	posX = oldX[1];
+	posX = posX+0.5;
 	bFlag = 1;
 }
 void	Enemy::OnCollisionY() {
-	posY = oldY[1];
+	posY = posY + +0.5;
+	bFlag = 2;
+}
+void	Enemy::OnCollisionX2() {
+	posX = posX - +0.5;
+	bFlag = 1;
+}
+void	Enemy::OnCollisionY2() {
+	posY = posY - +0.5;
 	bFlag = 2;
 }
 
 void	Enemy::DeathCollision() {
 	flag = false;
+}
+void	Enemy::OnCollisionXY() {
+	posX = oldX[1];
+	posY = oldY[1];
+	bFlag = 3;
 }

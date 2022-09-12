@@ -10,7 +10,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void	Initialize(float	x_, float	y_,float	cX_,float	cY_);
+	void	Initialize(float	cX_,float	cY_);
 	/// <summary>
 	/// XV
 	/// </summary>
@@ -23,13 +23,13 @@ public:
 	void	SetPlayer(Player* player_) { player = player_; };
 
 
-	float	posX;
-	float	posY;
+	float	posX[3];
+	float	posY[3];
 	float	r = 40.0f;
 private:
 	float	centerX;
 	float	centerY;
-	float	angle;
+	float	angle[3];
 	float	len;
 	float	adX;
 	float	adY;

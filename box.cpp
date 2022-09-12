@@ -12,8 +12,7 @@ void	Box::Initialize(float	x_, float	y_) {
 void	Box::Update() {
 	oldX = posX;
 	oldY = posY;
-	x_ = posX - width / 2;
-	y_ = posY - higth / 2;
+	
 	mapFlag = false;
 	if (posX < 320)
 	{

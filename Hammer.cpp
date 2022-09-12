@@ -1,27 +1,33 @@
 #include "Hammer.h"
 
 
-void	Hammer::Initialize(float	x_, float	y_, float	cX_, float	cY_) {
+void	Hammer::Initialize( float	cX_, float	cY_) {
 
-	posX = x_;
-	posY = y_;
-	len = 60;
+	len = 120;
 	centerX = cX_;
 	centerY = cY_;
-	angle = 0;
+	angle[0] = 0;
+	angle[1] = 120;
+	angle[2] = 240;
 }
 
 void	Hammer::Update() {
-	radius = angle * 3.14f;
-	adX = cos(radius)*len;
-	adY = sin(radius) * len;
-	posX = centerX + adX;
-	posY = centerY + adY;
-	angle += 3;
+	for (size_t i = 0; i < 3; i++)
+	{
+		radius = angle[i] * 3.14f / 180.0f;
+		adX = cos(radius)*len;
+		adY = sin(radius) * len;
+		posX[i] = centerX + adX;
+		posY[i] = centerY + adY;
+		angle[i] += 1;
+
+	}
 }
 
 void	Hammer::Draw() {	
-	DrawCircle(posX - player->scrollX, posY - player->scrollY, r, GetColor(0, 255, 0), true);
-	//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
-	
+	for (size_t i = 0; i < 3; i++)
+	{
+		DrawCircle(posX[i] - player->scrollX, posY[i] - player->scrollY, r, GetColor(0, 255, 0), true);
+		//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
+	}
 }
