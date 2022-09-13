@@ -3,12 +3,14 @@
 void	Player::State() {
 	posX = 504.0f;
 	posY = 300.0f;
+	angle = 0;
 	scrollX, scrollY = 0;
 	flag = true;
 	x_ = 0.0f;
 	y_ = 0.0f;
 	handle=LoadGraph("./Resources/Player.png");
 	lightHandle = LoadGraph("./Resources/light.png");
+	suctionHandle = LoadGraph("./Resources/playerEffect.png");
 }
 
 void	Player::Update(char	key[], char	oldkey[]) {
@@ -97,7 +99,7 @@ void	Player::Update(char	key[], char	oldkey[]) {
 		{
 			num++;
 			timer = time;
-			if (num == 6)
+			if (num == 5)
 			{
 				num = 0;
 			}
@@ -144,9 +146,7 @@ void	Player::Draw() {
 	{
 
 		//DrawGraph(posX - r - scrollX, posY - r - scrollY, handle[num], TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(120, 120, 255), true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
+		DrawRectGraph(posX - range - scrollX, posY - range - scrollY,num*290,0,290,290,suctionHandle, true,false);
 		DrawCircle(posX - scrollX, posY - scrollY, range2, GetColor(255, 255, 255), false);
 		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle, true, false);
 	}

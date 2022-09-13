@@ -37,5 +37,6 @@ private:
 	int clearBGM;
 	int clearTex;
 	int clear;
+	int	space;
 };
 

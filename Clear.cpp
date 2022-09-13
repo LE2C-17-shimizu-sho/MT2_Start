@@ -9,6 +9,7 @@ void Clear::Initialize()
 
 	clear = LoadGraph("./Resources/clear.png");
 	clearTex = LoadGraph("./Resources/clearTex.png");
+	space = LoadGraph("./Resources/SPACE.png");
 }
 
 void Clear::Update(int scene)
@@ -38,6 +39,7 @@ void Clear::Draw()
 	//DrawGraph(posX, posY, titleTex, true);
 	DrawGraph(0, 0, clear, true);
 	DrawGraph(700, 140, clearTex, true);
+	DrawGraph(420, 570, space, true);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, blendNum);
 	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(0, 0, 0), true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, blendNum);

@@ -15,8 +15,7 @@ public:
 	void Draw();
 
 private:
-	int overBGM;
-	int overTex;
-	int over;
+	int	title;
+	int	retry;
 };
 

@@ -38,5 +38,6 @@ private:
 	int titleTex;
 	int titleFont;
 	int titleLight;
+	int	space;
 };
 

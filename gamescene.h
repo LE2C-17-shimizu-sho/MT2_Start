@@ -10,9 +10,11 @@
 #include"Clear.h"
 #include"Story.h"
 #include"Over.h"
+#include"Particle.h"
 
 const	int	numE=14;
 const	int	numB = 2;
+const	int	numH = 3;
 
 class GameScene
 {
@@ -46,28 +48,34 @@ private:
 	Map* map;
 	Box* box[numB];
 	Goal* goal;
-	Hammer* hammer;
+	Hammer* hammer[numH];
 	Title* title;
 	Clear* clear;
 	Story* story;
 	Over* over;
+	Particle* particle;
 
+	//‰¹
 	int titleHandle;
 	int gamesceneHandle;
 	int clearHandle;
 	int bikkuriHandle;
 	int questionHandle;
 	int kibakoHandle;
-
+	//ƒtƒ‰ƒO
 	int soundFlag;
 
 	int	seFlag;
 	int	seFlagE[numE];
 	int	seFlagB[numB];
 
+	//‰æ‘œ
 	int	groundHandle;
+	int	opeHandle;
+	int	bgHandle;
 
-	int	time[numE] ;
+
+	int	time[numE];
 	int	time2[numE];
 	int	time3[numB];
 
@@ -78,19 +86,24 @@ private:
 		{2584 ,750},
 		{2584,400},
 		{1916,1806},
-		{1664,576},
+		{3722,340},
 		{3454,442},
-		{4284,896},
+		{4542,288},
 		{4720,544},
-		{5200,1024},
-		{4984,1858},
+		{5300,1024},
+		{4984,1880},
 		{4210,2078},
-		{4000,2752},
+		{3962,1754},
 		{3578,2738}
 	};
 	int	boxPos[numB][2] = {
 		//{650, 1420},
 		{1030, 2694},
 		{2688,448}
+	};
+	int	hammerPos[numH][2] = {
+		{4984, 1858},
+		{4210,2078},
+		{3578,2738}
 	};
 };

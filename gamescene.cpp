@@ -16,11 +16,16 @@ GameScene::~GameScene() {
 		delete	box[i];
 	}
 	delete	goal;
+	for (size_t i = 0; i < numH; i++)
+	{
+		delete	hammer[i];
+	}
 };
 
 void GameScene::Initialize() {
 	//プレイヤー
 	player = new Player();
+
 	//敵
 	for (size_t i = 0; i < numE; i++)
 	{
@@ -30,9 +35,12 @@ void GameScene::Initialize() {
 		time2[i] = 0;
 		seFlagE[i] = 0;
 	}
+
 	//マップ
 	map = new	Map();
 	map->Initialize();
+
+	//木箱
 	for (size_t i = 0; i < numB; i++)
 	{
 		box[i] = new	Box();
@@ -40,30 +48,48 @@ void GameScene::Initialize() {
 		time3[i] = 0;
 		seFlagB[i] = 0;
 	}
+
 	//ゴール
 	goal = new	Goal;
 	goal->Initialize();
+
 	//回転するやつ
-	hammer = new	Hammer;
-	hammer->Initialize( 520, 380);
+	for (size_t i = 0; i < numH; i++)
+	{
+		hammer[i] = new	Hammer;
+		hammer[i]->Initialize(hammerPos[i][0], hammerPos[i][1], 200);
+	}
+
 	//タイトル
 	title = new	Title;
 	title->Initialize(0, 0);
+
 	//クリア
 	clear = new	Clear;
 	clear->Initialize();
+
 	//ストーリー
 	story = new	Story;
 	story->Initialize();
+
 	//オーバー
 	over = new	Over;
-	//over->Initialize();
+	over->Initialize();
+
+	//パーティクル
+	particle = new	Particle;
+	particle->Initialize();
+
 	//BGMのフラグ
 	soundFlag = 0;
 	//SEフラグ
 	seFlag = 0;
-	//プレイ画面の背景
+	
+	//画像
 	groundHandle = LoadGraph("./Resources/backGround.png");
+	opeHandle= LoadGraph("./Resources/ope.png");
+	bgHandle= LoadGraph("./Resources/storyBg.png");
+
 	//BGM
 	titleHandle = LoadSoundMem("./music/title.wav");
 	gamesceneHandle = LoadSoundMem("./music/gamescene.wav");
@@ -108,8 +134,12 @@ void GameScene::Update() {
 			}
 			goal->State();
 			goal->SetPlayer(player);
-			hammer->SetPlayer(player);
+			for (size_t i = 0; i < numH; i++)
+			{
+				hammer[i]->SetPlayer(player);
+			}
 			story->Reset();
+			particle->SetPlayer(player);
 		}
 		break;
 		//ストーリー
@@ -131,6 +161,7 @@ void GameScene::Update() {
 		// ゲーム
 	case 3:
 		#pragma	region	アップデート
+		particle->State();
 		for (size_t i = 0; i < numE; i++)
 		{
 			enemy_[i]->markFlag = 0;
@@ -144,9 +175,10 @@ void GameScene::Update() {
 		{
 			box[i]->Update();
 		}
-		//enemy_[0]->Update();
-		
-		hammer->Update();
+		for (size_t i = 0; i < numH; i++)
+		{
+			hammer[i]->Update();
+		}
 
 		goal->Update();
 		map->Update();
@@ -162,14 +194,13 @@ void GameScene::Update() {
 		{
 			scene = 5;
 		}
-		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
-		{
-			scene = 4;
-		}
 		break;
 
 		// リザルト(クリア)
 	case 4:
+		StopSoundMem(kibakoHandle);
+		StopSoundMem(questionHandle);
+		StopSoundMem(bikkuriHandle);
 		clear->Update(scene);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
@@ -180,7 +211,36 @@ void GameScene::Update() {
 
 		// リザルト(ゲームオーバー)
 	case 5:
-		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
+		particle->Move();
+		StopSoundMem(kibakoHandle);
+		StopSoundMem(questionHandle);
+		StopSoundMem(bikkuriHandle);
+		if (keys[KEY_INPUT_R] == 1 && oldkeys[KEY_INPUT_R] == 0)
+		{
+			scene = 3;
+			player->State();
+			for (size_t i = 0; i < numE; i++)
+			{
+				enemy_[i]->State(enemyPos[i][0], enemyPos[i][1]);
+				enemy_[i]->SetPlayer(player);
+				map->SetEnemy(enemy_[i], i);
+			}
+			map->SetPlayer(player);
+			for (size_t i = 0; i < numB; i++)
+			{
+				box[i]->State(boxPos[i][0], boxPos[i][1]);
+				box[i]->SetPlayer(player);
+				map->SetBox(box[i], i);
+			}
+			goal->State();
+			goal->SetPlayer(player);
+			for (size_t i = 0; i < numH; i++)
+			{
+				hammer[i]->SetPlayer(player);
+			}
+			story->Reset();
+		}
+		if (keys[KEY_INPUT_T] == 1 && oldkeys[KEY_INPUT_T] == 0)
 		{
 			scene = 0;
 			title->Reset();
@@ -248,6 +308,7 @@ void GameScene::Update() {
 			if (time2[i] == 5 && CheckSoundMem(bikkuriHandle) == 0)
 			{
 				PlaySoundMem(bikkuriHandle, DX_PLAYTYPE_BACK, true);
+				ChangeVolumeSoundMem(80, bikkuriHandle);
 				seFlag = 0;
 			}
 		}
@@ -259,6 +320,7 @@ void GameScene::Update() {
 			if (time[i] == 5 && CheckSoundMem(questionHandle) == 0)
 			{
 				PlaySoundMem(questionHandle, DX_PLAYTYPE_BACK, true);
+				ChangeVolumeSoundMem(80, questionHandle);
 				seFlag = 0;
 			}
 		}
@@ -269,6 +331,7 @@ void GameScene::Update() {
 			if (time3[i] == 5 && CheckSoundMem(questionHandle) == 0)
 			{
 				PlaySoundMem(kibakoHandle, DX_PLAYTYPE_BACK, true);
+				ChangeVolumeSoundMem(100, kibakoHandle);
 				seFlag = 0;
 			}
 		}
@@ -293,12 +356,17 @@ void	GameScene::Draw() {
 		// 操作説明
 	case 2:
 		DrawFormatString(0, 0, color, " 操作説明");
+		DrawGraph(0, 0,bgHandle , true);
+		DrawGraph(0, 0, opeHandle, true);
 		break;
 
 		// ゲーム
 	case 3:
 		map->Draw();
 		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawCircle(player->x_ - player->scrollX, player->y_ - player->scrollY, player->range, GetColor(120, 120, 255), true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
 		for (size_t i = 0; i < numE; i++)
 		{
 			enemy_[i]->Draw();
@@ -307,7 +375,10 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
-		hammer->Draw();
+		for (size_t i = 0; i < numH; i++)
+		{
+			hammer[i]->Draw();
+		}
 
 		goal->Draw();
 		player->Draw();
@@ -334,11 +405,15 @@ void	GameScene::Draw() {
 		{
 			box[i]->Draw();
 		}
-		hammer->Draw();
+		for (size_t i = 0; i < numH; i++)
+		{
+			hammer[i]->Draw();
+		}
 
 		goal->Draw();
 		player->Draw();
 		over->Draw();
+		particle->Draw();
 		break;
 	}
 	//DrawFormatString(0, 10, color, "%d", time[0]);
@@ -354,6 +429,7 @@ void	GameScene::CheckAll() {
 	float	r2_;
 	float	w_;
 	float	h_;
+	//敵とプレイヤー
 	for (size_t i = 0; i < numE; i++)
 	{
 		if (player->flag && enemy_[i]->flag)
@@ -416,6 +492,7 @@ void	GameScene::CheckAll() {
 			}
 		}
 	}
+	//木箱とプレイヤー
 	for (size_t i = 0; i < numB; i++)
 	{
 		if (player->flag)
@@ -496,6 +573,24 @@ void	GameScene::CheckAll() {
 		if (CheckCircle(x1_,y1_,r1_,x2_,y2_,r2_))
 		{
 			goal->flag = true;
+		}
+	}
+	//スピナーとプレイヤー
+	{
+		for (size_t i = 0; i < numH; i++)
+		{
+
+			for (size_t j = 0; j < 3; j++)
+			{
+				r1_ = player->r;
+				x2_ = hammer[i]->posX[j];
+				y2_ = hammer[i]->posY[j];
+				r2_ = hammer[i]->r;
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					player->OnCollision();
+				}
+			}
 		}
 	}
 }

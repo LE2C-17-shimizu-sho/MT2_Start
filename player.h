@@ -42,12 +42,13 @@ public:
 private:
 	int	handle;
 	int	lightHandle;
+	int	suctionHandle;
 	float	posX;
 	float	posY;
 	float	move;
 	float	xd;
 	float	yd;
-	const	int	time = 30;
+	const	int	time = 5;
 	float	angle;
 	int	timer;
 	int	num;

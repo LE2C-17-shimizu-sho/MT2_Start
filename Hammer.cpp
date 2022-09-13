@@ -1,9 +1,9 @@
 #include "Hammer.h"
 
 
-void	Hammer::Initialize( float	cX_, float	cY_) {
+void	Hammer::Initialize( float	cX_, float	cY_,float	len_) {
 	LoadDivGraph("./Resources/hammer.png", 4, 4, 1, 80, 80, handle);
-	len = 120;
+	len = len_;
 	centerX = cX_;
 	centerY = cY_;
 	angle[0] = 0;

@@ -2,8 +2,8 @@
 
 void Over::Initialize()
 {
-	//over = LoadGraph("./Resources/clear.png");
-	//overTex = LoadGraph("./Resources/clearTex.png");
+	title = LoadGraph("./Resources/titleTex.png");
+	retry = LoadGraph("./Resources/RetryTex.png");
 }
 
 void Over::Draw()
@@ -11,6 +11,6 @@ void Over::Draw()
 	DrawBox(160, 520, 600, 650, GetColor(255, 255, 255), true);
 	DrawBox(680, 520, 1120, 650, GetColor(255, 255, 255), true);
 
-	//DrawGraph(0, 0, over, true);
-	//DrawGraph(700, 140, overTex, true);
+	DrawGraph(160, 520, retry, true);
+	DrawGraph(680, 520, title, true);
 }

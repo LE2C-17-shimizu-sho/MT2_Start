@@ -10,7 +10,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void	Initialize(float	cX_,float	cY_);
+	void	Initialize(float	cX_,float	cY_,float	len_);
 	/// <summary>
 	/// XV
 	/// </summary>

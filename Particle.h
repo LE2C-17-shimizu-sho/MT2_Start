@@ -10,8 +10,10 @@ public:
 	// 初期化
 	void Initialize();
 
+	void	State();
+
 	// パーティクルの動き
-	void Move(bool	flag);
+	void Move();
 
 	// 描画
 	void Draw();
@@ -19,19 +21,23 @@ public:
 	void	SetPlayer(Player* player_) { player = player_; };
 
 private:
+	float	posX;
+	float	posY;
+
+	float	r;
 	// 横長の棒の座標
-	int particleX;
-	int particleY;
-	int particleX2;
-	int particleY2;
+	//float particleX;
+	//float particleY;
+	//float particleX2;
+	//float particleY2;
 
 	// 棒が縮んでいく速度
-	int particleSpeed;
+	const	int speed=10;
 
 	// アルファ値
 	int alphaValue;
 	// アルファ値が減っていく速度
-	int alphaSpeed;
+	const	int alphaSpeed=20;
 
 	// ひし形の画像読み込む変数
 	int efect;
