@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="box.cpp" />
+    <ClCompile Include="Clear.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="gamescene.cpp" />
     <ClCompile Include="Goal.cpp" />
@@ -145,12 +146,14 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="product.cpp" />
+    <ClCompile Include="Story.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="box.h" />
+    <ClInclude Include="Clear.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="gamescene.h" />
     <ClInclude Include="Goal.h" />
@@ -161,6 +164,7 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="product.h" />
+    <ClInclude Include="Story.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />

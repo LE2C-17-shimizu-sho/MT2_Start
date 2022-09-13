@@ -6,6 +6,9 @@
 #include"box.h"
 #include"Goal.h"
 #include"Hammer.h"
+#include"Title.h"
+#include"Clear.h"
+#include"Story.h"
 
 const	int	numE=14;
 const	int	numB = 2;
@@ -43,6 +46,10 @@ private:
 	Box* box[numB];
 	Goal* goal;
 	Hammer* hammer;
+	Title* title;
+	Clear* clear;
+	Story* story;
+
 
 	int	groundHandle;
 	int	enemyPos[numE][2] = {

@@ -9,6 +9,7 @@ void Title::Initialize(float x, float y)
 
 	titleTex = LoadGraph("./Resources/title.png");
 	titleFont = LoadGraph("./Resources/titleFont.png");
+	titleLight= LoadGraph("./Resources/titleLight.png");
 }
 
 void Title::Update(int scene)
@@ -34,10 +35,11 @@ void Title::Update(int scene)
 
 void Title::Draw()
 {
-	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(0, 0, 255), true);
-	//DrawGraph(posX, posY, titleTex, true);
-	DrawGraph(posX + 420, posY + 290, titleFont, true);
+	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(255, 255, 255), true);
 
+	//DrawGraph(posX, posY, titleTex, true);
+	DrawGraph(0, 0, titleLight, true);
+	DrawGraph(posX + 420, posY + 290, titleFont, true);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, blendNum);
 	DrawBox(posX, posY, posX + 1280, posY + 720, GetColor(0, 0, 0), true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, blendNum);

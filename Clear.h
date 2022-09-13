@@ -1,13 +1,13 @@
 #pragma once
-#include "DxLib.h"
+#include"DxLib.h"
 
-class Title
+class Clear
 {
 public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(float x, float y);
+	void Initialize();
 
 	/// <summary>
 	/// XVˆ—
@@ -24,19 +24,18 @@ public:
 	/// </summary>
 	void Reset();
 
-	float titleTime;
+	float clearTime;
 	float blendNum = 255;
 	float blendNum2;
 
-	bool titleFlag;
+	bool clearFlag;
 
 	float posX = 0;
 	float posY = 0;
 
 private:
-	int titleBGM;
-	int titleTex;
-	int titleFont;
-	int titleLight;
+	int clearBGM;
+	int clearTex;
+	int clear;
 };
 

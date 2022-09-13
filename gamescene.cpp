@@ -1,6 +1,5 @@
 #include"gamescene.h"
 #include"DxLib.h"
-
 GameScene::GameScene()
 {
 }
@@ -20,12 +19,15 @@ GameScene::~GameScene() {
 };
 
 void GameScene::Initialize() {
+	//プレイヤー
 	player = new Player();
+	//敵
 	for (size_t i = 0; i < numE; i++)
 	{
 		enemy_[i] = new	Enemy();
 		enemy_[i]->Initialize();
 	}
+	//マップ
 	map = new	Map();
 	map->Initialize();
 	for (size_t i = 0; i < numB; i++)
@@ -33,12 +35,22 @@ void GameScene::Initialize() {
 		box[i] = new	Box();
 		box[i]->Initialize();
 	}
-
+	//ゴール
 	goal = new	Goal;
 	goal->Initialize();
-
+	//回転するやつ
 	hammer = new	Hammer;
 	hammer->Initialize( 520, 380);
+	//タイトル
+	title = new	Title;
+	title->Initialize(0, 0);
+	//クリア
+	clear = new	Clear;
+	clear->Initialize();
+	//ストーリー
+	story = new	Story;
+	story->Initialize();
+	//プレイ画面の背景
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
 
@@ -56,6 +68,7 @@ void GameScene::Update() {
 	{
 		// タイトル
 	case 0:
+		title->Update(scene);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 1;
@@ -76,16 +89,18 @@ void GameScene::Update() {
 			goal->State();
 			goal->SetPlayer(player);
 			hammer->SetPlayer(player);
+			story->Reset();
 		}
 		break;
-
-		// 操作説明
+		//ストーリー
 	case 1:
+		story->Update(scene);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 2;
 		}
 		break;
+		// 操作説明
 	case 2:
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
@@ -100,7 +115,6 @@ void GameScene::Update() {
 		{
 			enemy_[i]->markFlag = 0;
 		}
-		map->Update();
 		player->Update(keys, oldkeys);
 		for (size_t i = 0; i < numE; i++)
 		{
@@ -115,12 +129,14 @@ void GameScene::Update() {
 		hammer->Update();
 
 		goal->Update();
+		map->Update();
 		CheckAll();
 		#pragma	endregion
 
 		if (goal->flag)//クリア
 		{
 			scene = 4;
+			clear->Reset();
 		}
 		if (!player->flag)//オーバー
 		{
@@ -134,9 +150,11 @@ void GameScene::Update() {
 
 		// リザルト(クリア)
 	case 4:
+		clear->Update(scene);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 0;
+			title->Reset();
 		}
 		break;
 
@@ -145,6 +163,7 @@ void GameScene::Update() {
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 0;
+			title->Reset();
 		}
 		break;
 	}
@@ -156,10 +175,12 @@ void	GameScene::Draw() {
 	{
 		// タイトル
 	case 0:
+		title->Draw();
 		DrawFormatString(0, 0, color, "タイトル");
 
 		break;
 	case 1:
+		story->Draw();
 		DrawFormatString(0, 0, color, "ストーリー");
 		break;
 		// 操作説明
@@ -189,6 +210,7 @@ void	GameScene::Draw() {
 
 		// リザルト(クリア)
 	case 4:
+		clear->Draw();
 		DrawFormatString(0, 0, color, "クリア");
 		break;
 
@@ -255,10 +277,10 @@ void	GameScene::CheckAll() {
 				x2_ = enemy_[i]->posX;
 				y2_ = enemy_[i]->posY;
 				r2_ = enemy_[i]->r;
-				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
-				{
-					player->OnCollision();
-				}
+				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				//{
+				//	player->OnCollision();
+				//}
 
 			}
 		}
