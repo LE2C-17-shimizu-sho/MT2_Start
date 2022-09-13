@@ -107,7 +107,7 @@ void GameScene::Update() {
 		//ストーリー
 	case 1:
 		story->Update(scene);
-		ChangeVolumeSoundMem(150, titleHandle);
+		ChangeVolumeSoundMem(200, titleHandle);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 2;
