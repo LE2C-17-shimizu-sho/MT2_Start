@@ -190,6 +190,12 @@ void GameScene::Update() {
 		}
 		break;
 	}
+
+	//BGMÅAå¯â âπ
+	switch (scene)
+	{
+		case 0:
+	}
 }
 
 void	GameScene::Draw() {
