@@ -6,7 +6,7 @@
 #include"gamescene.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "10DaysGameJam";
+const char TITLE[] = "2046_ASTRONAVE";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 1280;
