@@ -28,6 +28,7 @@ void GameScene::Initialize() {
 		enemy_[i]->Initialize();
 		time[i] = 0;
 		time2[i] = 0;
+		seFlagE[i] = 0;
 	}
 	//マップ
 	map = new	Map();
@@ -36,6 +37,8 @@ void GameScene::Initialize() {
 	{
 		box[i] = new	Box();
 		box[i]->Initialize();
+		time3[i] = 0;
+		seFlagB[i] = 0;
 	}
 	//ゴール
 	goal = new	Goal;
@@ -199,22 +202,16 @@ void GameScene::Update() {
 				}
 				soundFlag += 1;
 			}
-
 			break;
-
 		case 1:
 			if (soundFlag == 1)
 			{
 				ChangeVolumeSoundMem(200, titleHandle);
 				soundFlag += 1;
 			}
-
 			break;
-
 		case 2:
-
 			break;
-
 		case 3:
 			if (soundFlag == 2)
 			{
@@ -226,9 +223,7 @@ void GameScene::Update() {
 				ChangeVolumeSoundMem(180, gamesceneHandle);
 				soundFlag += 1;
 			}
-
 			break;
-
 		case 4:
 			if (soundFlag == 3) 
 			{
@@ -239,14 +234,45 @@ void GameScene::Update() {
 				}
 				soundFlag = 0;
 			}
-
 			break;
-
 		case 5:
-
 			soundFlag = 0;
-
 			break;
+	}
+	//SE
+	switch (seFlag)
+	{
+	case	1:
+		for (size_t i = 0; i < numE; i++)
+		{
+			if (time2[i] == 5 && CheckSoundMem(bikkuriHandle) == 0)
+			{
+				PlaySoundMem(bikkuriHandle, DX_PLAYTYPE_BACK, true);
+				seFlag = 0;
+			}
+		}
+		break;
+	case	2:
+		for (size_t i = 0; i < numE; i++)
+		{
+				
+			if (time[i] == 5 && CheckSoundMem(questionHandle) == 0)
+			{
+				PlaySoundMem(questionHandle, DX_PLAYTYPE_BACK, true);
+				seFlag = 0;
+			}
+		}
+		break;
+	case	3:
+		for (size_t i = 0; i < numB; i++)
+		{
+			if (time3[i] == 5 && CheckSoundMem(questionHandle) == 0)
+			{
+				PlaySoundMem(kibakoHandle, DX_PLAYTYPE_BACK, true);
+				seFlag = 0;
+			}
+		}
+		break;
 	}
 }
 
@@ -285,35 +311,6 @@ void	GameScene::Draw() {
 
 		goal->Draw();
 		player->Draw();
-		//SE
-		switch (seFlag)
-		{
-		case	1:
-			for (size_t i = 0; i < numE; i++)
-			{
-				if (time2[i] == 5 && CheckSoundMem(bikkuriHandle) == 0)
-				{
-					PlaySoundMem(bikkuriHandle, DX_PLAYTYPE_BACK, true);
-					seFlag = 0;
-				}
-			}
-			break;
-		case	2:
-			for (size_t i = 0; i < numE; i++)
-			{
-					
-				if (time[i] == 5 && CheckSoundMem(questionHandle) == 0)
-				{
-					PlaySoundMem(questionHandle, DX_PLAYTYPE_BACK, true);
-					seFlag = 0;
-				}
-			}
-			break;
-		case	3:
-			PlaySoundMem(kibakoHandle, DX_PLAYTYPE_BACK, true);
-			seFlag = 0;
-			break;
-		}
 		DrawFormatString(0, 0, color, "ゲーム");
 		DrawFormatString(0, 10, color, "%d",seFlag);
 		break;
@@ -392,10 +389,15 @@ void	GameScene::CheckAll() {
 						seFlag = 1;
 					}
 					time2[i]++;
+					seFlagE[i] = 1;
 				}
 				else
 				{
-					//StopSoundMem(bikkuriHandle);
+					if (seFlagE[i])
+					{
+						StopSoundMem(bikkuriHandle);
+						seFlagE[i] = 0;
+					}
 					//seFlag=0
 					time2[i] = 0;
 				}
@@ -430,6 +432,17 @@ void	GameScene::CheckAll() {
 					box[i]->HomingCollision();
 					DrawFormatString(200, 200, GetColor(255, 255, 255), "3");
 					seFlag = 3;
+					seFlagB[i] = 1;
+					time3[i]++;
+				}
+				else
+				{
+					if (seFlagB[i])
+					{
+						StopSoundMem(kibakoHandle);
+						seFlagB[i] = 0;
+					}
+					time3[i] = 0;
 				}
 				
 			}

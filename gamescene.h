@@ -62,11 +62,14 @@ private:
 	int soundFlag;
 
 	int	seFlag;
+	int	seFlagE[numE];
+	int	seFlagB[numB];
 
 	int	groundHandle;
 
 	int	time[numE] ;
 	int	time2[numE];
+	int	time3[numB];
 
 	int	enemyPos[numE][2] = {
 		//{650, 1420},
