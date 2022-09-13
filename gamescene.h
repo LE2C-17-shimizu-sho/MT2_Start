@@ -61,6 +61,8 @@ private:
 
 	int soundFlag;
 
+	int	seFlag;
+
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
 		//{650, 1420},

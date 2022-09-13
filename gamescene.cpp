@@ -55,13 +55,15 @@ void GameScene::Initialize() {
 	//over->Initialize();
 	//BGMのフラグ
 	soundFlag = 0;
-
+	//SEフラグ
+	seFlag = 0;
 	//プレイ画面の背景
 	groundHandle = LoadGraph("./Resources/backGround.png");
-	//BGM、効果音
+	//BGM
 	titleHandle = LoadSoundMem("./music/title.wav");
 	gamesceneHandle = LoadSoundMem("./music/gamescene.wav");
 	clearHandle = LoadSoundMem("./music/clear.mp3");
+	//SE
 	bikkuriHandle = LoadSoundMem("./music/bikkuri.mp3");
 	questionHandle = LoadSoundMem("./music/question.mp3");
 	kibakoHandle = LoadSoundMem("./music/kibako.mp3");
