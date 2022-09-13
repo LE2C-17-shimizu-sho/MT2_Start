@@ -52,6 +52,9 @@ private:
 	Story* story;
 	Over* over;
 
+	int titleHandle;
+	int gamesceneHandle;
+
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
 		//{650, 1420},
