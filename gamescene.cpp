@@ -50,6 +50,10 @@ void GameScene::Initialize() {
 	//ストーリー
 	story = new	Story;
 	story->Initialize();
+	//オーバー
+	over = new	Over;
+	//over->Initialize();
+
 	//プレイ画面の背景
 	groundHandle = LoadGraph("./Resources/backGround.png");
 }
@@ -231,6 +235,7 @@ void	GameScene::Draw() {
 
 		goal->Draw();
 		player->Draw();
+		over->Draw();
 		break;
 	}
 	DrawFormatString(0, 30, color, "scene = %d", scene);
@@ -277,10 +282,10 @@ void	GameScene::CheckAll() {
 				x2_ = enemy_[i]->posX;
 				y2_ = enemy_[i]->posY;
 				r2_ = enemy_[i]->r;
-				//if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
-				//{
-				//	player->OnCollision();
-				//}
+				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
+				{
+					player->OnCollision();
+				}
 
 			}
 		}

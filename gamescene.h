@@ -9,6 +9,7 @@
 #include"Title.h"
 #include"Clear.h"
 #include"Story.h"
+#include"Over.h"
 
 const	int	numE=14;
 const	int	numB = 2;
@@ -49,7 +50,7 @@ private:
 	Title* title;
 	Clear* clear;
 	Story* story;
-
+	Over* over;
 
 	int	groundHandle;
 	int	enemyPos[numE][2] = {
