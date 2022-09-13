@@ -142,11 +142,13 @@ void	Player::Update(char	key[], char	oldkey[]) {
 void	Player::Draw() {
 	if (flag)
 	{
-		DrawCircle(posX-scrollX, posY-scrollY, r, GetColor(255,255,255), true);
+
 		//DrawGraph(posX - r - scrollX, posY - r - scrollY, handle[num], TRUE);
-		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle, true, false);
-		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(255, 255, 255), false);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+		DrawCircle(posX  - scrollX, posY  - scrollY, range, GetColor(120, 120, 255), true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
 		DrawCircle(posX - scrollX, posY - scrollY, range2, GetColor(255, 255, 255), false);
+		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle, true, false);
 	}
 	DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
 	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
