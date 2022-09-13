@@ -27,6 +27,7 @@ public:
 	float	posY[3];
 	float	r = 40.0f;
 private:
+	int	handle[4];
 	float	centerX;
 	float	centerY;
 	float	angle[3];
@@ -34,6 +35,10 @@ private:
 	float	adX;
 	float	adY;
 	float	radius;
+
+	const	int	time = 5;
+	int	timer;
+	int	num;
 
 	Player* player = nullptr;
 
