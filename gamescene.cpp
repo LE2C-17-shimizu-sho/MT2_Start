@@ -26,6 +26,8 @@ void GameScene::Initialize() {
 	{
 		enemy_[i] = new	Enemy();
 		enemy_[i]->Initialize();
+		time[i] = 0;
+		time2[i] = 0;
 	}
 	//マップ
 	map = new	Map();
@@ -64,9 +66,9 @@ void GameScene::Initialize() {
 	gamesceneHandle = LoadSoundMem("./music/gamescene.wav");
 	clearHandle = LoadSoundMem("./music/clear.mp3");
 	//SE
-	bikkuriHandle = LoadSoundMem("./music/bikkuri.mp3");
-	questionHandle = LoadSoundMem("./music/question.mp3");
-	kibakoHandle = LoadSoundMem("./music/kibako.mp3");
+	bikkuriHandle = LoadSoundMem("./music/bikkuri.mp3");	//1
+	questionHandle = LoadSoundMem("./music/question.mp3");	//2
+	kibakoHandle = LoadSoundMem("./music/kibako.mp3");		//3
 }
 
 void GameScene::Update() {
@@ -183,7 +185,7 @@ void GameScene::Update() {
 		break;
 	}
 
-	//BGM、効果音
+	//BGM
 	switch (scene)
 	{
 		case 0:
@@ -283,8 +285,37 @@ void	GameScene::Draw() {
 
 		goal->Draw();
 		player->Draw();
+		//SE
+		switch (seFlag)
+		{
+		case	1:
+			for (size_t i = 0; i < numE; i++)
+			{
+				if (time2[i] == 5 && CheckSoundMem(bikkuriHandle) == 0)
+				{
+					PlaySoundMem(bikkuriHandle, DX_PLAYTYPE_BACK, true);
+					seFlag = 0;
+				}
+			}
+			break;
+		case	2:
+			for (size_t i = 0; i < numE; i++)
+			{
+					
+				if (time[i] == 5 && CheckSoundMem(questionHandle) == 0)
+				{
+					PlaySoundMem(questionHandle, DX_PLAYTYPE_BACK, true);
+					seFlag = 0;
+				}
+			}
+			break;
+		case	3:
+			PlaySoundMem(kibakoHandle, DX_PLAYTYPE_BACK, true);
+			seFlag = 0;
+			break;
+		}
 		DrawFormatString(0, 0, color, "ゲーム");
-		DrawFormatString(0, 10, color, "%d",enemy_[0]->markFlag);
+		DrawFormatString(0, 10, color, "%d",seFlag);
 		break;
 
 		// リザルト(クリア)
@@ -313,6 +344,7 @@ void	GameScene::Draw() {
 		over->Draw();
 		break;
 	}
+	//DrawFormatString(0, 10, color, "%d", time[0]);
 	DrawFormatString(0, 30, color, "scene = %d", scene);
 }
 
@@ -338,6 +370,12 @@ void	GameScene::CheckAll() {
 				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
 				{
 					enemy_[i]->markCollision();
+					seFlag = 2;
+					time[i]++;
+				}
+				else
+				{
+					time[i] = 0;
 				}
 			}
 			//敵と吸い込む範囲の当たり判定
@@ -349,6 +387,17 @@ void	GameScene::CheckAll() {
 				if (CheckCircle(x1_, y1_, r1_, x2_, y2_, r2_))
 				{
 					enemy_[i]->OnCollision();
+					if (seFlag == 2)
+					{
+						seFlag = 1;
+					}
+					time2[i]++;
+				}
+				else
+				{
+					//StopSoundMem(bikkuriHandle);
+					//seFlag=0
+					time2[i] = 0;
 				}
 			}
 			//敵と自機の当たり判定
@@ -380,6 +429,7 @@ void	GameScene::CheckAll() {
 				{
 					box[i]->HomingCollision();
 					DrawFormatString(200, 200, GetColor(255, 255, 255), "3");
+					seFlag = 3;
 				}
 				
 			}

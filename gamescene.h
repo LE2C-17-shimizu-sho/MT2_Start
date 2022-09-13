@@ -64,6 +64,10 @@ private:
 	int	seFlag;
 
 	int	groundHandle;
+
+	int	time[numE] ;
+	int	time2[numE];
+
 	int	enemyPos[numE][2] = {
 		//{650, 1420},
 		{620, 1420},
