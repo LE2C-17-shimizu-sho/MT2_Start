@@ -1,5 +1,8 @@
 #pragma once
 #include"DxLib.h"
+#include"player.h"
+
+class Player;
 
 class Particle
 {
@@ -8,10 +11,12 @@ public:
 	void Initialize();
 
 	// パーティクルの動き
-	void Move(char keys[], char oldkey[]);
+	void Move(bool	flag);
 
 	// 描画
 	void Draw();
+
+	void	SetPlayer(Player* player_) { player = player_; };
 
 private:
 	// 横長の棒の座標
@@ -34,5 +39,7 @@ private:
 
 	//	スペースを押したときに立てるフラグ
 	bool flag;
+
+	Player* player;
 };
 
