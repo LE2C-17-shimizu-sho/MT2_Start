@@ -31,9 +31,7 @@ void	Box::Update() {
 }
 
 void	Box::Draw() {
-	DrawBox(posX - player->scrollX, posY - player->scrollY, posX + width - player->scrollX, posY + higth - player->scrollY, GetColor(170, 70, 0), true);
 	DrawGraph(posX - player->scrollX, posY - player->scrollY, handle, true);
-	//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
 }
 
 void	Box::OnCollisionX() {
@@ -56,7 +54,6 @@ void	Box::HomingCollision() {
 			move = 2.5f;
 		}
 		posX -= move;
-		//OuterProduct(player->x_, posX, player->y_, posY, move);
 	}
 
 }

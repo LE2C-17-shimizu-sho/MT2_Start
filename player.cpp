@@ -147,12 +147,9 @@ void	Player::Draw() {
 
 		//DrawGraph(posX - r - scrollX, posY - r - scrollY, handle[num], TRUE);
 		DrawRectGraph(posX - range - scrollX, posY - range - scrollY,num*290,0,290,290,suctionHandle, true,false);
-		DrawCircle(posX - scrollX, posY - scrollY, range2, GetColor(255, 255, 255), false);
 		DrawRotaGraph(posX - scrollX, posY - scrollY, 1.0f, angle, handle, true, false);
 	}
 	DrawGraph(posX - 1000 - scrollX, posY - 750 - scrollY, lightHandle, TRUE);
-	DrawFormatString(0, 80, GetColor(255, 255, 255), "x=%f", posX);
-	DrawFormatString(0, 100, GetColor(255, 255, 255), "Y=%f",posY);
 }
 
 void	Player::OnCollision() {

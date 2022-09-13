@@ -217,6 +217,7 @@ void GameScene::Update() {
 		StopSoundMem(bikkuriHandle);
 		if (keys[KEY_INPUT_R] == 1 && oldkeys[KEY_INPUT_R] == 0)
 		{
+			soundFlag = 2;
 			scene = 3;
 			player->State();
 			for (size_t i = 0; i < numE; i++)
@@ -278,7 +279,7 @@ void GameScene::Update() {
 				StopSoundMem(titleHandle);
 				if (CheckSoundMem(gamesceneHandle) == 0)
 				{
-					PlaySoundMem(gamesceneHandle, DX_PLAYTYPE_BACK, true);
+					PlaySoundMem(gamesceneHandle, DX_PLAYTYPE_LOOP, true);
 				}
 				ChangeVolumeSoundMem(180, gamesceneHandle);
 				soundFlag += 1;
@@ -346,16 +347,13 @@ void	GameScene::Draw() {
 		// タイトル
 	case 0:
 		title->Draw();
-		DrawFormatString(0, 0, color, "タイトル");
 
 		break;
 	case 1:
 		story->Draw();
-		DrawFormatString(0, 0, color, "ストーリー");
 		break;
 		// 操作説明
 	case 2:
-		DrawFormatString(0, 0, color, " 操作説明");
 		DrawGraph(0, 0,bgHandle , true);
 		DrawGraph(0, 0, opeHandle, true);
 		break;
@@ -382,19 +380,15 @@ void	GameScene::Draw() {
 
 		goal->Draw();
 		player->Draw();
-		DrawFormatString(0, 0, color, "ゲーム");
-		DrawFormatString(0, 10, color, "%d",seFlag);
 		break;
 
 		// リザルト(クリア)
 	case 4:
 		clear->Draw();
-		DrawFormatString(0, 0, color, "クリア");
 		break;
 
 		// リザルト(ゲームオーバー)
 	case 5:
-		DrawFormatString(0, 0, color, "オーバー");
 		map->Draw();
 		DrawGraph(0 - player->scrollX, 0 - player->scrollY, groundHandle, true);
 		for (size_t i = 0; i < numE; i++)
@@ -416,8 +410,6 @@ void	GameScene::Draw() {
 		particle->Draw();
 		break;
 	}
-	//DrawFormatString(0, 10, color, "%d", time[0]);
-	DrawFormatString(0, 30, color, "scene = %d", scene);
 }
 
 void	GameScene::CheckAll() {
@@ -507,7 +499,6 @@ void	GameScene::CheckAll() {
 				if (CheckCircleDotL(x1_, y1_, r1_, x2_, y2_,w_,h_))
 				{
 					box[i]->HomingCollision();
-					DrawFormatString(200, 200, GetColor(255, 255, 255), "3");
 					seFlag = 3;
 					seFlagB[i] = 1;
 					time3[i]++;

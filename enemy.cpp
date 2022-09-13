@@ -36,7 +36,6 @@ void	Enemy::Update() {
 void	Enemy::Draw() {
 	if (flag)
 	{
-		DrawCircle(posX-player->scrollX, posY - player->scrollY, r, GetColor(0,255,0), true);
 		DrawGraph(posX - r - player->scrollX, posY - r - player->scrollY, handle[num], true);
 		if (markFlag == 1)
 		{
@@ -46,7 +45,6 @@ void	Enemy::Draw() {
 		{
 			DrawGraph(posX - r- player->scrollX, posY - (r+10)- player->scrollY, bikkuriHandle, true);
 		}
-		//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
 	}
 }
 

@@ -36,8 +36,7 @@ void	Hammer::Update() {
 void	Hammer::Draw() {	
 	for (size_t i = 0; i < 3; i++)
 	{
-		DrawCircle(posX[i] - player->scrollX, posY[i] - player->scrollY, r, GetColor(0, 255, 0), true);
+		
 		DrawGraph(posX[i] - r - player->scrollX, posY[i] - r - player->scrollY,handle[num], true);
-		//DrawFormatString(200, 0, GetColor(255, 255, 255), "%f", angle);
 	}
 }

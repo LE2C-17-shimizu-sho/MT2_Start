@@ -13,6 +13,7 @@ void Particle::State() {
 	posY = player->y_ - player->r - player->scrollY;
 	// ‚±‚Ì“ñ‚Â‚à‚»‚Ì‚Ü‚Ü
 	alphaValue = 255;
+	r = 0;
 	// ‚±‚ê‚à‚»‚Ì‚Ü‚Ü
 	flag = false;
 }
@@ -33,7 +34,10 @@ void Particle::Move()
 	if (alphaValue<0)
 	{
 		flag = false;
+		r = 0;
+		alphaValue = 0;
 	}
+
 
 	//// –_‚ªŠ®‘S‚Ék‚Þ‚Ü‚Åˆ—‚ðs‚¤
 	//if (particleX != particleX2 && flag == true)

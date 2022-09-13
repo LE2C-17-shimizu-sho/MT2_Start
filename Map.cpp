@@ -16,19 +16,17 @@ void Map::Update()
 			{	
 				//ƒvƒŒƒCƒ„[‚Ì‚ ‚½‚è”»’è
 				{
-					if (CheckSide1(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
+					/*if (CheckSide1(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
 						CheckSide3(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 					{
-						DrawFormatString(100, 0, GetColor(255, 255, 255), "1");
 						player->MapCollisionX();
 					
 					}
 					if (CheckSide2(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
 						CheckSide4(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 					{
-						DrawFormatString(110, 0, GetColor(255, 255, 255), "2");
 						player->MapCollisionY();
-					}
+					}*/
 				}
 
 				//” ‚Ì“–‚½‚è”»’è
@@ -39,9 +37,7 @@ void Map::Update()
 						{
 							box[i]->OnCollisionX();
 
-							box[i]->OnCollisionY();
-							DrawFormatString(120, 0, GetColor(255, 255, 255), "3");
-							
+							box[i]->OnCollisionY();							
 						}
 					}
 				}
