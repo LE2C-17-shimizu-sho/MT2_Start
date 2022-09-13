@@ -23,11 +23,11 @@ void Particle::Initialize()
 	flag = false;
 }
 
-void Particle::Move(char keys[], char oldkey[])
+void Particle::Move(bool	flag)
 {
 	// スペースを押したらフラグを立て、アルファ値をMAXに
 	// ここは敵が死んだらに置き換わる
-	if (keys[KEY_INPUT_SPACE] == 1 && oldkey[KEY_INPUT_SPACE] == 0)
+	if (!flag)
 	{
 		flag = true;
 		alphaValue = 255;
