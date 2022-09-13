@@ -54,6 +54,12 @@ private:
 
 	int titleHandle;
 	int gamesceneHandle;
+	int clearHandle;
+	int bikkuriHandle;
+	int questionHandle;
+	int kibakoHandle;
+
+	int soundFlag;
 
 	int	groundHandle;
 	int	enemyPos[numE][2] = {

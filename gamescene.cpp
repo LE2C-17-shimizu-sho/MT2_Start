@@ -53,12 +53,18 @@ void GameScene::Initialize() {
 	//オーバー
 	over = new	Over;
 	//over->Initialize();
+	//BGMのフラグ
+	soundFlag = 0;
 
 	//プレイ画面の背景
 	groundHandle = LoadGraph("./Resources/backGround.png");
 	//BGM、効果音
 	titleHandle = LoadSoundMem("./music/title.wav");
 	gamesceneHandle = LoadSoundMem("./music/gamescene.wav");
+	clearHandle = LoadSoundMem("./music/clear.mp3");
+	bikkuriHandle = LoadSoundMem("./music/bikkuri.mp3");
+	questionHandle = LoadSoundMem("./music/question.mp3");
+	kibakoHandle = LoadSoundMem("./music/kibako.mp3");
 }
 
 void GameScene::Update() {
@@ -76,11 +82,6 @@ void GameScene::Update() {
 		// タイトル
 	case 0:
 		title->Update(scene);
-		if (CheckSoundMem(titleHandle) == 0)
-		{
-			PlaySoundMem(titleHandle, DX_PLAYTYPE_BACK, true);
-		}
-		ChangeVolumeSoundMem(256, titleHandle);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 1;
@@ -107,7 +108,6 @@ void GameScene::Update() {
 		//ストーリー
 	case 1:
 		story->Update(scene);
-		ChangeVolumeSoundMem(200, titleHandle);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			scene = 2;
@@ -117,7 +117,6 @@ void GameScene::Update() {
 	case 2:
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
-			StopSoundMem(titleHandle);
 			scene = 3;
 		}
 		break;
@@ -139,13 +138,6 @@ void GameScene::Update() {
 			box[i]->Update();
 		}
 		//enemy_[0]->Update();
-
-		if (CheckSoundMem(gamesceneHandle) == 0)
-		{
-			PlaySoundMem(gamesceneHandle, DX_PLAYTYPE_BACK, true);
-		}
-
-		ChangeVolumeSoundMem(180, gamesceneHandle);
 		
 		hammer->Update();
 
@@ -156,13 +148,11 @@ void GameScene::Update() {
 
 		if (goal->flag)//クリア
 		{
-			StopSoundMem(gamesceneHandle);
 			scene = 4;
 			clear->Reset();
 		}
 		if (!player->flag)//オーバー
 		{
-			StopSoundMem(gamesceneHandle);
 			scene = 5;
 		}
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
@@ -195,6 +185,64 @@ void GameScene::Update() {
 	switch (scene)
 	{
 		case 0:
+			if (soundFlag == 0) 
+			{
+				StopSoundMem(gamesceneHandle);
+				if (CheckSoundMem(titleHandle) == 0)
+				{
+					PlaySoundMem(titleHandle, DX_PLAYTYPE_BACK, true);
+					ChangeVolumeSoundMem(256, titleHandle);
+				}
+				soundFlag += 1;
+			}
+
+			break;
+
+		case 1:
+			if (soundFlag == 1)
+			{
+				ChangeVolumeSoundMem(200, titleHandle);
+				soundFlag += 1;
+			}
+
+			break;
+
+		case 2:
+
+			break;
+
+		case 3:
+			if (soundFlag == 2)
+			{
+				StopSoundMem(titleHandle);
+				if (CheckSoundMem(gamesceneHandle) == 0)
+				{
+					PlaySoundMem(gamesceneHandle, DX_PLAYTYPE_BACK, true);
+				}
+				ChangeVolumeSoundMem(180, gamesceneHandle);
+				soundFlag += 1;
+			}
+
+			break;
+
+		case 4:
+			if (soundFlag == 3) 
+			{
+				StopSoundMem(gamesceneHandle);
+				if (CheckSoundMem(clearHandle) == 0)
+				{
+					PlaySoundMem(clearHandle, DX_PLAYTYPE_BACK, true);
+				}
+				soundFlag = 0;
+			}
+
+			break;
+
+		case 5:
+
+			soundFlag = 0;
+
+			break;
 	}
 }
 
