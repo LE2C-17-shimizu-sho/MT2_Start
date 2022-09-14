@@ -258,7 +258,7 @@ void GameScene::Update() {
 				StopSoundMem(gamesceneHandle);
 				if (CheckSoundMem(titleHandle) == 0)
 				{
-					PlaySoundMem(titleHandle, DX_PLAYTYPE_BACK, true);
+					PlaySoundMem(titleHandle, DX_PLAYTYPE_LOOP, true);
 					ChangeVolumeSoundMem(256, titleHandle);
 				}
 				soundFlag += 1;
