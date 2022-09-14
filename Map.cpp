@@ -16,7 +16,7 @@ void Map::Update()
 			{	
 				//ƒvƒŒƒCƒ„[‚Ì‚ ‚½‚è”»’è
 				{
-					/*if (CheckSide1(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
+					if (CheckSide1(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT) &&
 						CheckSide3(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 					{
 						player->MapCollisionX();
@@ -26,7 +26,7 @@ void Map::Update()
 						CheckSide4(player->x_, player->y_, player->r, MAPCHIP_WIDTH * x, MAPCHIP_HEIGHT * y, MAPCHIP_WIDTH, MAPCHIP_HEIGHT))
 					{
 						player->MapCollisionY();
-					}*/
+					}
 				}
 
 				//” ‚Ì“–‚½‚è”»’è
