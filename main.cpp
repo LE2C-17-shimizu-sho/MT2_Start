@@ -28,10 +28,6 @@ int SetCameraPositionAndTargetAndUpVec(
 	const Vector3& cameraUp //カメラの上の向き
 );
 
-//モデルの座標変換用行列をセットする
-// DxLib => int MV1SetMatrix(int MHandle, MATRIX Matrix);
-int MV1SetMatrix(const int MHandle, const Matrix4 Matrix);
-
 //関数プロトタイプ宣言
 void DrawAxis3D(const float length); // ×,y,z 軸の描画
 void DrawKeyOperation(); //キー操作の描画
@@ -96,17 +92,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//クリップ面近遠
 	SetCameraNearFar(1.0f, 10000.0f);//カメラの有効範囲を設定
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f); //画面の中心をカメラの中心に合わせる
-	SetCameraPositionAndTargetAndUpVec(cameraPosition, cameraTarget, cameraup);
+	SetCameraPositionAndTargetAndUpVec(
+		Vector3(0.0f,0.0f,-120.0f),
+		Vector3(0.0f, 0.0f, 0.0f),
+		Vector3(0.0f, -1.0f, 0.0f));
 
-	//アプリで使用する変数
-	int model = MV1LoadModel("fighter/fighter.mqo");
+	// 時間計測に必要なデータ
+	long long startCount = 0;
+	long long nowCount = 0;
+	long long elapsedCount = 0;
 
-	//xyz軸の回転角度
-	const float ROT_UNIT = 0.01f;
-	float rotX = 0.0f;
-	float rotY = 0.0f;
-	float rotZ = 0.0f;
+	// 補間で使うデータ
+	// start → end を 5 [s] で完了させる
+	Vector3 start(-100.0f, 0, 0);
+	Vector3 end(+100.0f, 0, 0);
+	float maxTime = 5.0f;
+	float timeRate;
 
+	// 球の位置
+	Vector3 position;
+
+	// 実行前に カウンタ値を取得
+	startCount = GetNowHiPerformanceCount(); // long long int型  64bit int
 
 	// ゲームループ
 	while (true)
@@ -122,42 +129,33 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		//更新
-		if (CheckHitKey(KEY_INPUT_A))	rotY += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_D))	rotY -= ROT_UNIT;
 
-		if (CheckHitKey(KEY_INPUT_W))	rotX += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_S))	rotX -= ROT_UNIT;
-
-		if (CheckHitKey(KEY_INPUT_E))	rotZ += ROT_UNIT;
-		if (CheckHitKey(KEY_INPUT_Z))	rotZ -= ROT_UNIT;
-
-		//[R]でリセット
+		// [R]キーで、リスタート
 		if (CheckHitKey(KEY_INPUT_R))
 		{
-			rotX = rotY = rotZ = 0;
+			startCount = GetNowHiPerformanceCount();
 		}
+		
+		// 経過時間(elapsedTime [s]) の計算
+		nowCount = GetNowHiPerformanceCount();
+		elapsedCount = nowCount - startCount;
+		float elapsedTime = static_cast<float> (elapsedCount) / 1'000'000.0f;
 
-		//各種変換行列の計算
-		Matrix4 matScale = scale(Vector3(5.0f, 5.0f, 5.0f)); //モデルの拡大率
+		// スタート地点		: start
+		// エンド地点		: end
+		// 経過時間			: elapsedTime [s]
+		// 移動完了の率(経過時間/全体時間) : timeRate (%)
 
-		Matrix4 matRotX = rotateX(rotX);
+		timeRate = min(elapsedTime / maxTime, 1.0f);
 
-		Matrix4 matRotY = rotateY(rotY);
-
-		Matrix4 matRotZ = rotateZ(rotZ);
-
-		Matrix4 matRot = matRotY * matRotX * matRotZ;
-
-		Matrix4 matWorld = matScale * matRot;
-
-
-		MV1SetMatrix(model, matWorld);
-
+		position = lerp(start, end, timeRate);
 
 		//描画---------------
 		ClearDrawScreen();//画面を消去
-		DrawAxis3D(200.0f);//xyz軸の描画
-		MV1DrawModel(model);//モデルの描画
+		DrawAxis3D(500.0f);//xyz軸の描画
+
+		// 球の描画
+		DrawSphere3D(position, 5.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255).TRUE);
 
 		DrawKeyOperation();// キー操作の描画
 
@@ -208,16 +206,6 @@ void DrawAxis3D(const float length)
 	DrawCone3D(Vector3(0, 0, length), Vector3(0, 0, length - coneSize), coneSize / 2, 16,
 		GetColor(0, 0, 255), GetColor(255, 255, 255), TRUE);
 
-}
-
-//キー操作の描画
-void DrawKeyOperation()
-{
-	const unsigned white = GetColor(255, 255, 255);
-	DrawFormatString(10, 20 * 1, white, "  [W][E][R]  R : リセット");
-	DrawFormatString(10, 20 * 2, white, "[A][S][D]    AD: y軸まわりの回転");
-	DrawFormatString(10, 20 * 3, white, " [Z]         WS: x軸まわりの回転");
-	DrawFormatString(10, 20 * 4, white, "             EZ: z軸まわりの回転");
 }
 
 // DxLib => int DrawCone3D( VECTOR TopPos, VECTOR Bottompos, float r, int DivNum, unsigned int Difcolor, unsigned int Spccolor,int FillFlag);
