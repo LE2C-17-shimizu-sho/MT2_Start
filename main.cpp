@@ -155,7 +155,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		DrawAxis3D(500.0f);//xyzé≤ÇÃï`âÊ
 
 		// ãÖÇÃï`âÊ
-		DrawSphere3D(position, 5.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255).TRUE);
+		DrawSphere3D(position, 5.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), true);
+
+		// 
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "position (%5.1f,%5.1f,%5.1f)", position.x, position.y, position.z);
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "%7.3f", elapsedTime);
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "[R] : Restart");
+
 
 		DrawKeyOperation();// ÉLÅ[ëÄçÏÇÃï`âÊ
 
@@ -196,7 +202,7 @@ void DrawAxis3D(const float length)
 	DrawLine3D(Vector3(0, 0, -length), Vector3(0, 0, +length), GetColor(0, 0, 255));//zé≤
 
 	//é≤ÇÃêÊÇÃï`âÊ Å¶Å~yzé≤ÇÃêÊÇ¡Ç€Ç…ÅAâ~êçÇÇ¬ÇØÇÈ
-	const float coneSize = 10.0f;
+	/*const float coneSize = 10.0f;
 	DrawCone3D(Vector3(length, 0, 0), Vector3(length - coneSize, 0, 0), coneSize / 2, 16,
 		GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 
@@ -204,7 +210,7 @@ void DrawAxis3D(const float length)
 		GetColor(0, 255, 0), GetColor(255, 255, 255), TRUE);
 
 	DrawCone3D(Vector3(0, 0, length), Vector3(0, 0, length - coneSize), coneSize / 2, 16,
-		GetColor(0, 0, 255), GetColor(255, 255, 255), TRUE);
+		GetColor(0, 0, 255), GetColor(255, 255, 255), TRUE);*/
 
 }
 
