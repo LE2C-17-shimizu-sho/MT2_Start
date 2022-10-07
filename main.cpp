@@ -29,11 +29,11 @@ int SetCameraPositionAndTargetAndUpVec(
 );
 
 //関数プロトタイプ宣言
-void DrawAxis3D(const float length); // ×,y,z 軸の描画
+void DrawAxis3D(const float length); // x,y,z 軸の描画
 void DrawKeyOperation(); //キー操作の描画
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "LE2C_17_シミズ_ショウ: タイトル";
+const char TITLE[] = "LE2B_13_シミズ_ショウ: タイトル";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 1600;
@@ -84,18 +84,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
-	//カメラ初期化
-	Vector3 cameraPosition(50.0f, 50.0f, -400.0f);
-	Vector3 cameraTarget(0.0f, 0.0f, 0.0f);
-	Vector3 cameraup(0.0f, 1.0f, 0.0f);
-
 	//クリップ面近遠
 	SetCameraNearFar(1.0f, 10000.0f);//カメラの有効範囲を設定
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f); //画面の中心をカメラの中心に合わせる
 	SetCameraPositionAndTargetAndUpVec(
 		Vector3(0.0f,0.0f,-120.0f),
 		Vector3(0.0f, 0.0f, 0.0f),
-		Vector3(0.0f, -1.0f, 0.0f));
+		Vector3(0.0f, 1.0f, 0.0f));
 
 	// 時間計測に必要なデータ
 	long long startCount = 0;
@@ -160,7 +155,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 
 		DrawFormatString(0, 0, GetColor(255, 255, 255), "position (%5.1f,%5.1f,%5.1f)", position.x, position.y, position.z);
 		DrawFormatString(0, 20, GetColor(255, 255, 255), "%7.3f", elapsedTime);
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "[R] : Restart");
+		DrawFormatString(0, 40, GetColor(255, 255, 255), "[R] : Restart");
 
 
 		DrawKeyOperation();// キー操作の描画
@@ -212,6 +207,12 @@ void DrawAxis3D(const float length)
 	DrawCone3D(Vector3(0, 0, length), Vector3(0, 0, length - coneSize), coneSize / 2, 16,
 		GetColor(0, 0, 255), GetColor(255, 255, 255), TRUE);*/
 
+}
+
+//キー操作の描画
+void DrawKeyOperation()
+{
+	const unsigned white = GetColor(255, 255, 255);
 }
 
 // DxLib => int DrawCone3D( VECTOR TopPos, VECTOR Bottompos, float r, int DivNum, unsigned int Difcolor, unsigned int Spccolor,int FillFlag);
