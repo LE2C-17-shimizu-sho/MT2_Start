@@ -3,6 +3,30 @@
 #include "Vector2.h"
 #include"Matrix4.h"
 #include<cstring>
+#include <vector>
+// 制御点の集合(vectorコンテナ)、保管する区間の添え字、時間経過率
+Vector3 SplinePosition(const std::vector<Vector3>& points, size_t startIndex, float t) 
+{
+	// 補完すべき点の数
+	size_t n = points.size() - 2;
+
+	if (startIndex > n) return points[n];	// Pnの値を返す
+	if (startIndex < 1) return points[1];	// P1の値を返す
+
+	// p0～p1 の制御点を取得する ※ p1～p2 を補完する
+	Vector3 p0 = points[startIndex - 1];
+	Vector3 p1 = points[startIndex];
+	Vector3 p2 = points[startIndex + 1];
+	Vector3 p3 = points[startIndex + 2];
+
+	// Catmull - Rom の式による補間
+	Vector3 position = 0.5 * ((2 * p1 + (-p0 + p2) * t) +
+		(2 * p0 - 5 * p1 + 4 * p2 - p3) * (t * t) +
+		(-p0 + 3 * p1 - 3 * p2 + p3) * (t * t * t));
+
+	return position;
+}
+
 // 関数プロトタイプ宣言
 int DrawCircle(Vector2 vec, int r, unsigned int color);
 
@@ -88,9 +112,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetCameraNearFar(1.0f, 10000.0f);//カメラの有効範囲を設定
 	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f); //画面の中心をカメラの中心に合わせる
 	SetCameraPositionAndTargetAndUpVec(
-		Vector3(0.0f, 200.0f, 0.0f),
+		//Vector3(0.0f, 200.0f, 0.0f),
+		Vector3(-20.0f, 20.0f, -200.0f),
 		Vector3(0.0f, 0.0f, 0.0f),
-		Vector3(0.0f, 0.0f, 1.0f));
+		Vector3(0.0f, 1.0f, 0.0f));
 
 	// 時間計測に必要なデータ
 	long long startCount = 0;
@@ -99,12 +124,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 補間で使うデータ
 	// start → end を 5 [s] で完了させる
-	Vector3 p0(-100.0f, 0.0f, 0.0f);
-	Vector3 p1(-10.0f,  0.0f, 50.0f);
-	Vector3 p2(+10.0f,  0.0f, -50.0f);
-	Vector3 p3(+100.0f, 0.0f, 0.0f);
+	Vector3 start(-100.0f, 0.0f, 0.0f);
+	Vector3 p2(-50.0f, 50.0f, +50.0f);
+	Vector3 p3(+50.0f,-30.0f, -50.0f);
+	Vector3 end(+100.0f, 0.0f, 0.0f);
 	float maxTime = 5.0f;
 	float timeRate;
+	//							   p0	p1   p2 p3  p4  p5
+	std::vector<Vector3> points{ start,start,p2,p3,end,end };
+
+	// p1 からスタートする
+	size_t startIndex = 1;
 
 	// 球の位置
 	Vector3 position;
@@ -131,6 +161,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		if (CheckHitKey(KEY_INPUT_R))
 		{
 			startCount = GetNowHiPerformanceCount();
+			startIndex = 1;
 		}
 
 		// 経過時間(elapsedTime [s]) の計算
@@ -143,42 +174,56 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 経過時間			: elapsedTime [s]
 		// 移動完了の率(経過時間/全体時間) : timeRate (%)
 
-		timeRate = min(elapsedTime / maxTime, 1.0f);
+		// timeRate が 1.0f 以上になったら、次の区間に進む
+		timeRate = elapsedTime / maxTime;
+		// timeRate = min(elapsedTime / maxTime, 1.0f);
 
-		// 3次ベジェ曲線の計算
-		Vector3 a = lerp(p0, p1, timeRate);
-		Vector3 b = lerp(p1, p2, timeRate);
-		Vector3 c = lerp(p2, p3, timeRate);
-		Vector3 d = lerp(a, b, timeRate);
-		Vector3 e = lerp(b, c, timeRate);
+		if (timeRate >= 1.0f)
+		{
+			if (startIndex < points.size() - 3)
+			{
+				startIndex += 1.0f;
+				timeRate -= 1.0f;
+				startCount = GetNowHiPerformanceCount();
+			}
+			else 
+			{
+				timeRate = 1.0f;
+			}
+		}
+		position = SplinePosition(points,startIndex,timeRate);
 
-		position = lerp(d, e, timeRate);
+		//// 3次ベジェ曲線の計算
+		//Vector3 a = lerp(p0, p1, timeRate);
+		//Vector3 b = lerp(p1, p2, timeRate);
+		//Vector3 c = lerp(p2, p3, timeRate);
+		//Vector3 d = lerp(a, b, timeRate);
+		//Vector3 e = lerp(b, c, timeRate);
+
+		/*position = lerp(d, e, timeRate);*/
 
 		//描画---------------
 		ClearDrawScreen();//画面を消去
 		DrawAxis3D(500.0f);//xyz軸の描画
 
 		// 球の描画
+		DrawSphere3D(start, 2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
+		DrawSphere3D(p2,	2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
+		DrawSphere3D(p3,	2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
+		DrawSphere3D(end,	2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
 		DrawSphere3D(position, 5.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), true);
 
-		DrawSphere3D(p0, 2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
-		DrawSphere3D(p1, 2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
-		DrawSphere3D(p2, 2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
-		DrawSphere3D(p3, 2.0f, 32, GetColor(0, 255, 0), GetColor(255, 255, 255), true);
+		// 座標などの描画
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "position (%5.1f,%5.1f,%5.1f)", position.x, position.y, position.z);
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "startIndex %d", startIndex);
+		DrawFormatString(0, 40, GetColor(255, 255, 255), "timeRate %7.3f [%%]", timeRate);
+		DrawFormatString(0, 60, GetColor(255, 255, 255), "elapsedTime %7.3f [s]", elapsedTime);
+		DrawFormatString(0, 80, GetColor(255, 255, 255), "[R] : Restart");
 
-		// 
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "position (%6.1f,%6.1f,%6.1f)", position.x, position.y, position.z);
-
-		DrawFormatString(0, 20, GetColor(255, 255, 255), "%7.3f [s]", elapsedTime);
-		DrawFormatString(0, 40, GetColor(255, 255, 255), "[R] : Restart");
-
-		DrawFormatString(0, 80, GetColor(255, 255, 255), "p0 (%6.1f,%6.1f,%6.1f)", p0.x, p0.y, p0.z);
-
-		DrawFormatString(0, 100, GetColor(255, 255, 255), "p1 (%6.1f,%6.1f,%6.1f)", p1.x, p1.y, p1.z);
-
+		DrawFormatString(0, 100, GetColor(255, 255, 255), "start (%6.1f,%6.1f,%6.1f)", start.x, start.y, start.z);
 		DrawFormatString(0, 120, GetColor(255, 255, 255), "p2 (%6.1f,%6.1f,%6.1f)", p2.x, p2.y, p2.z);
-
 		DrawFormatString(0, 140, GetColor(255, 255, 255), "p3 (%6.1f,%6.1f,%6.1f)", p3.x, p3.y, p3.z);
+		DrawFormatString(0, 160, GetColor(255, 255, 255), "end (%6.1f,%6.1f,%6.1f)", end.x, end.y, end.z);
 
 
 		DrawKeyOperation();// キー操作の描画
