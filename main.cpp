@@ -1,20 +1,17 @@
 #include "DxLib.h"
-#include "Vector3.h"
-//球の描画
-int DrawSphere3D(const Vector3& CenterPos, const float r, const int DivNum,
-	const unsigned int DifColor, const unsigned int SpcColor, const int FillFlag);
+#include "Vector2.h"
+#include <cmath>
 
-int DrawLine3D(const Vector3& Pos1, const Vector3& Pos2, const unsigned int Color);
-
+bool CollisionLineCircle(Vector2& startLine, Vector2& endLine, Vector2& circle, int radius);
 
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "LE2C_17_シミズショウ: タイトル";
 
 // ウィンドウ横幅
-const int WIN_WIDTH = 1024;
+const int WIN_WIDTH = 600;
 
 // ウィンドウ縦幅
-const int WIN_HEIGHT = 576;
+const int WIN_HEIGHT = 400;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
                    _In_ int nCmdShow) {
@@ -49,22 +46,24 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	// Ｚバッファへの書き込みを有効にする
 	SetWriteZBuffer3D(TRUE);
 
-	//クリップ面      近     遠
-	SetCameraNearFar(1.0f, 1000.0f);//カメラの有効範囲の設定
-	SetCameraScreenCenter(WIN_WIDTH / 2.0f, WIN_HEIGHT / 2.0f);//画面の中心をカメラの中心に合わせる
-
-	SetCameraPositionAndTargetAndUpVec(
-		VGet(0.0f, 0.0f, -100.0f),//カメラの位置
-		VGet(0.0f, 0.0f, 0.0f),//カメラの注視点
-		VGet(0.0f, 1.0f, 0.0f));//カメラの上の向き
 
 	// 画像などのリソースデータの変数宣言と読み込み
 
-	Vector3 position(0, 0, 0);//位置
-	Vector3 velocity(0.0f, 0.0f, 0.5f);//速度
 
 	// ゲームループで使う変数の宣言
+	int radius = 30;
+	int speed = 5;
 
+	int VecPosAX = 0;
+	int VecPosBX = 0;
+	int VecPosAY = 0;
+	int VecPosBY = 0;
+
+	bool hitFlag = false;
+
+	Vector2 circle = { 250,250 };
+	Vector2 startLine = { 50,50 };
+	Vector2 goalLine = { 200,50 };
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};
@@ -83,11 +82,45 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		position += velocity;
+		if (keys[KEY_INPUT_W] == 1)
+		{
+			startLine.y -= speed;
+			goalLine.y -= speed;
+		}
+		if(keys[KEY_INPUT_S] == 1)
+		{
+			startLine.y += speed;
+			goalLine.y += speed;
+		}
+		if (keys[KEY_INPUT_A] == 1)
+		{
+			startLine.x -= speed;
+			goalLine.x -= speed;
+		}
+		if (keys[KEY_INPUT_D] == 1)
+		{
+			startLine.x += speed;
+			goalLine.x += speed;
+		}
+
+		hitFlag = CollisionLineCircle(startLine, goalLine, circle, radius);
+		
+
 
 		// 描画処理
-		ClearDrawScreen();
-		DrawSphere3D(position, 80.0f, 32, GetColor(255, 0, 0), GetColor(255, 255, 255), true);
+		if (hitFlag == true)
+		{
+			DrawCircle((int)circle.x, (int)circle.y, radius, GetColor(255, 0, 0), true);
+		}
+		else
+		{
+			DrawCircle((int)circle.x, (int)circle.y, radius, GetColor(255, 255, 255), true);
+		}
+		
+		DrawLine((int)startLine.x, (int)startLine.y, (int)goalLine.x, (int)goalLine.y, GetColor(0, 255, 0), true);
+
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "circleX: %d", hitFlag);
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "circleY: %d", circle.y);
 
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
@@ -113,21 +146,36 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	return 0;
 }
 
-//オーバーロード
-//球の描画
-int DrawSphere3D(const Vector3& CenterPos, const float r, const int DivNum,
-	const unsigned int DifColor, const unsigned int SpcColor, const int FillFlag)
+bool CollisionLineCircle(Vector2& startLine, Vector2& endLine, Vector2& circle, int radius)
 {
-	VECTOR centerPos = { CenterPos.x,CenterPos.y,CenterPos.z };
+	Vector2 vecLine = endLine - startLine;
 
-	return DrawSphere3D(centerPos, r, DivNum, DifColor, SpcColor, FillFlag);
-}
+	Vector2 endLineCircle = circle - endLine;
 
-//線分の描画
-int DrawLine3D(const Vector3& Pos1, const Vector3& Pos2, const unsigned int Color)
-{
-	VECTOR p1 = { Pos1.x,Pos1.y,Pos1.z };
-	VECTOR p2 = { Pos2.x,Pos2.y,Pos2.z };
+	Vector2 startLineCircle = circle - startLine;
 
-	return DrawLine3D(p1, p2, Color);
+	Vector2 normLineVec = vecLine.normalize();
+
+	float distance = startLineCircle.cross(normLineVec);
+
+	// 二乗する
+	float fab = distance * distance;
+
+	if (fab < radius)
+	{
+		float circlVecLineStartVecDot = startLineCircle.dot(vecLine);
+		float circlVecLineEndVecDot = endLineCircle.dot(vecLine);
+		float fabcircleLineDot = circlVecLineStartVecDot * circlVecLineEndVecDot;
+
+		if (fabcircleLineDot < 0)
+		{
+			return true;
+		}
+
+		if (endLineCircle.length() < radius || startLineCircle.length() < radius)
+		{
+			return true;
+		}
+	}
+	return false;
 }
