@@ -1,11 +1,8 @@
 #include "DxLib.h"
-#include "Vector2.h"
-#include <cmath>
-
-bool CollisionLineCircle(Vector2& startLine, Vector2& endLine, Vector2& circle, int radius);
+#include "SceneManager.h"
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "LE2C_17_シミズショウ: タイトル";
+const char TITLE[] = "タイトル";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 600;
@@ -51,19 +48,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 	// ゲームループで使う変数の宣言
-	int radius = 30;
-	int speed = 5;
-
-	int VecPosAX = 0;
-	int VecPosBX = 0;
-	int VecPosAY = 0;
-	int VecPosBY = 0;
-
-	bool hitFlag = false;
-
-	Vector2 circle = { 250,250 };
-	Vector2 startLine = { 50,50 };
-	Vector2 goalLine = { 200,50 };
+	SceneManager* sceneManager = SceneManager::GetInstance();
+	int sceneNo = 0;
 
 	// 最新のキーボード情報用
 	char keys[256] = {0};
@@ -82,46 +68,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//---------  ここからプログラムを記述  ----------//
 
 		// 更新処理
-		if (keys[KEY_INPUT_W] == 1)
-		{
-			startLine.y -= speed;
-			goalLine.y -= speed;
-		}
-		if(keys[KEY_INPUT_S] == 1)
-		{
-			startLine.y += speed;
-			goalLine.y += speed;
-		}
-		if (keys[KEY_INPUT_A] == 1)
-		{
-			startLine.x -= speed;
-			goalLine.x -= speed;
-		}
-		if (keys[KEY_INPUT_D] == 1)
-		{
-			startLine.x += speed;
-			goalLine.x += speed;
-		}
-
-		hitFlag = CollisionLineCircle(startLine, goalLine, circle, radius);
-		
-
+		sceneManager->ChangeScene(sceneNo);
 
 		// 描画処理
-		if (hitFlag == true)
-		{
-			DrawCircle((int)circle.x, (int)circle.y, radius, GetColor(255, 0, 0), true);
-		}
-		else
-		{
-			DrawCircle((int)circle.x, (int)circle.y, radius, GetColor(255, 255, 255), true);
-		}
-		
-		DrawLine((int)startLine.x, (int)startLine.y, (int)goalLine.x, (int)goalLine.y, GetColor(0, 255, 0), true);
-
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "circleX: %d", hitFlag);
-		DrawFormatString(0, 20, GetColor(255, 255, 255), "circleY: %d", circle.y);
-
+	
 		//---------  ここまでにプログラムを記述  ---------//
 		// (ダブルバッファ)裏面
 		ScreenFlip();
@@ -144,38 +94,4 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	// 正常終了
 	return 0;
-}
-
-bool CollisionLineCircle(Vector2& startLine, Vector2& endLine, Vector2& circle, int radius)
-{
-	Vector2 vecLine = endLine - startLine;
-
-	Vector2 endLineCircle = circle - endLine;
-
-	Vector2 startLineCircle = circle - startLine;
-
-	Vector2 normLineVec = vecLine.normalize();
-
-	float distance = startLineCircle.cross(normLineVec);
-
-	// 二乗する
-	float fab = distance * distance;
-
-	if (fab < radius)
-	{
-		float circlVecLineStartVecDot = startLineCircle.dot(vecLine);
-		float circlVecLineEndVecDot = endLineCircle.dot(vecLine);
-		float fabcircleLineDot = circlVecLineStartVecDot * circlVecLineEndVecDot;
-
-		if (fabcircleLineDot < 0)
-		{
-			return true;
-		}
-
-		if (endLineCircle.length() < radius || startLineCircle.length() < radius)
-		{
-			return true;
-		}
-	}
-	return false;
 }
