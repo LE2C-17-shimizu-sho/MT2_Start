@@ -9,11 +9,18 @@ char oldkeys[256] = { 0 };
 
 void SceneManager::ChangeScene(int& sceneNo)
 {
+	// 最新のキーボード情報だったものは1フレーム前のキーボード情報として保存
+	for (int i = 0; i < 256; ++i)
+	{
+		oldkeys[i] = keys[i];
+	}
+
 	GetHitKeyStateAll(keys);
+
 	switch (sceneNo)
 	{
 	case 0: // TitleScene
-		DrawBox(0, 0, 600, 400, GetColor(255, 50, 50), true);
+		DrawBox(0, 0, 600, 400, GetColor(222, 56, 56), true);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			// 次のシーンへ
@@ -22,7 +29,7 @@ void SceneManager::ChangeScene(int& sceneNo)
 		break;
 
 	case 1: // NewGameScene
-		DrawBox(0, 0, 600, 400, GetColor(50, 255, 50), true);
+		DrawBox(0, 0, 600, 400, GetColor(95, 75, 139), true);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			// 次のシーンへ
@@ -31,7 +38,7 @@ void SceneManager::ChangeScene(int& sceneNo)
 		break;
 
 	case 2: // GamePlayScene
-		DrawBox(0, 0, 600, 400, GetColor(50, 50, 255), true);
+		DrawBox(0, 0, 600, 400, GetColor(169, 183, 53), true);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			// 次のシーンへ
@@ -40,7 +47,7 @@ void SceneManager::ChangeScene(int& sceneNo)
 		break;
 
 	case 3: // GameClearScene
-		DrawBox(0, 0, 600, 400, GetColor(50, 50, 50), true);
+		DrawBox(0, 0, 600, 400, GetColor(76, 108, 179), true);
 		if (keys[KEY_INPUT_SPACE] == 1 && oldkeys[KEY_INPUT_SPACE] == 0)
 		{
 			// 最初のシーンへ
