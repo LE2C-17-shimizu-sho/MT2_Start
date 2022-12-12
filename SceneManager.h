@@ -8,24 +8,19 @@ public:
 	/// <param name="sceneNo">次のシーン番号</param>
 	void ChangeScene(int& sceneNo);
 
+	/// <summary>
+	/// deleteを実行
+	/// </summary>
+	void Delete();
+
 	// シングルトン
 	static SceneManager* GetInstance();
 
 private:
-	///// <summary>
-	///// シーン名
-	///// </summary>
-	//enum class Scene
-	//{
-	//	TitleScene,
-	//	NewGameScene,
-	//	GamePlayScene,
-	//	GameClearScene,
-	//};
-
 	//// 最初のシーンを設定
 	//Scene scene = Scene::TitleScene;
 	int number = 0;
+
 private:
 	SceneManager() = default;
 	~SceneManager() = default;
