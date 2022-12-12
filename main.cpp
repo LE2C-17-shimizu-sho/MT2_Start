@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "SceneManager.h"
 
+
 // ウィンドウのタイトルに表示する文字列
 const char TITLE[] = "タイトル";
 
