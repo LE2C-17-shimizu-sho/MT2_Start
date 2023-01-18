@@ -37,7 +37,7 @@ void DrawAxis3D(const float length); // ×,y,z 軸の描画
 void DrawKeyOperation(); //キー操作の描画
 
 // ウィンドウのタイトルに表示する文字列
-const char TITLE[] = "LE2C_17_シミズ_ショウ: タイトル";
+const char TITLE[] = "LE2B_17_シミズ_ショウ: タイトル";
 
 // ウィンドウ横幅
 const int WIN_WIDTH = 1600;
