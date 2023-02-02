@@ -4,10 +4,10 @@
 class Quaternion
 {
 public:
-	float x;
-	float y;
-	float z;
-	float w;
+	float x_;
+	float y_;
+	float z_;
+	float w_;
 
 	Quaternion();
 	Quaternion(float x, float y, float z, float w);
@@ -30,6 +30,31 @@ public:
 	Matrix4 MakeRotateMatrix();
 	//任意軸回転を表すQuaternionの生成
 	Quaternion MakeAxisAngle(const Vector3& axsi, float angle);
+	// uからvへの回転を生成
+	Quaternion DirectionToDirection(const Vector3& u, const Vector3& v);
+
+	//球面線形補間
+	Quaternion Slerp(const Quaternion& p, float t);
+	float Dot(const Quaternion& q)const;
+
+
+	//単項演算子オーバーロード
+	Quaternion operator + ();
+	Quaternion operator - ()const;
+
+	//代入演算子オーバーロード
+	Quaternion& operator += (const Quaternion& q);
+	Quaternion& operator -= (const Quaternion& q);
+	Quaternion& operator *= (float s);
+	Quaternion& operator /= (float s);
+	Quaternion& operator *= (const Quaternion& q);
 };
 
-const Quaternion operator/(const Quaternion& v, float s);
+//2項演算子オーバーロード
+const Quaternion operator + (const Quaternion& q1, const Quaternion& q2);
+const Quaternion operator - (const Quaternion& q1, const Quaternion& q2);
+const Quaternion operator * (const Quaternion& q1, const Quaternion& q2);
+const Quaternion operator * (const Quaternion& q, float s);
+const Quaternion operator * (float s, const Quaternion& q);
+const Quaternion operator / (const Quaternion& q, float s);
+const Vector3 operator*(Quaternion q, Vector3 vec);

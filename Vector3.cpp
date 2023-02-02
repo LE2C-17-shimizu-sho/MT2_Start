@@ -26,9 +26,30 @@ float Vector3::dot(const Vector3& v)const
 {
 	return x * v.x + y * v.y + z * v.z;
 }
+Vector3 Vector3::Norm() const
+{
+	Vector3 tmp(*this);
+
+	float len = length();
+	if (len != 0)
+	{
+		return tmp /= len;
+	}
+
+	return tmp;
+}
 float Vector3::cross(const Vector3& v)const
 {
 	return  x * v.x - y * v.y - z * v.z;
+}
+Vector3 Vector3::Cross(const Vector3& v) const
+{
+	Vector3 w;
+	w.x = y * v.z - z * v.y;
+	w.y = z * v.x - x * v.z;
+	w.z = x * v.y - y * v.x;
+
+	return w;
 }
 Vector3 Vector3::operator+()const
 {
