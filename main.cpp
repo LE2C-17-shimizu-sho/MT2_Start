@@ -48,7 +48,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     // ウィンドウを作成
     ChangeWindowMode(TRUE);
     SetGraphMode(800, 600, 32);
-    if (SetMainWindowText("Rational Bezier Curve") == -1) {
+    if (SetMainWindowText("Rational Bezier Curve - 3D Model") == -1) {
         return -1;
     }
     if (DxLib_Init() == -1) {
@@ -70,26 +70,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     double t_max = 1.0;
     int steps = 100;
 
-    // メインループ
-    while (!ProcessMessage() && !ClearDrawScreen())
-    {
+    // 3Dモデルを読み込む
+    int modelHandle = MV1LoadModel("model/model.mqo"); // モデルファイルのパスを指定
 
-        // 有理ベジェ曲線を描画
-        for (int i = 0; i <= steps; ++i) {
-            double t = t_min + (t_max - t_min) * i / steps;
-            std::vector<double> result = rational_bezier_curve(control_points, weights, t);
-            int x = static_cast<int>(result[0]);
-            int y = static_cast<int>(result[1]);
-            DrawPixel(x, y, GetColor(255, 255, 255));
-        }
+    // モデルの位置と回転角度を初期化
+    float modelX = 0.0f;
+    float modelY = 0.0f;
+    float modelZ = 0.0f;
+    float modelAngle = 0.0f;
+
+    // メインループ
+    while (!ProcessMessage() && !CheckHitKey(KEY_INPUT_ESCAPE)) {
+        // モデルを描画する
+        MV1SetPosition(modelHandle, VGet(modelX, modelY, modelZ));
+        MV1SetRotationXYZ(modelHandle, VGet(0.0f, modelAngle, 0.0f));
+        MV1DrawModel(modelHandle);
 
         // 画面の更新
         ScreenFlip();
-
-        // キーが押されるまで待機
-        WaitKey();
     }
 
+    // 3Dモデルを解放
+    MV1DeleteModel(modelHandle);
 
     // DxLibの終了処理
     DxLib_End();
